@@ -3591,12 +3591,7 @@ void DrawBillboardPro(Camera camera, Texture2D texture, Rectangle source, Vector
 
     rlSetTexture(0);
 }
-/// @brief draws a texture on a 3d plane. note that this does not handle positioning or rotation.
-/// @param camera: the current camera.
-/// @param texture: the texture to be rendered.
-/// @param source: the source rectangle that defines the part of the texture that needs to be rendered.
-/// @param tint: the tint to display on the texture.
-/// @param faceDirection:the direction in which the drawn texture must face.
+
 void DrawTextureOnPlane(Camera camera, Texture2D texture, Rectangle source, Vector2 size, Color tint, Vector3 faceDirection) {
     Vector3 up = {0,1,0};
     // NOTE: Billboard size will maintain source rectangle aspect ratio, size will represent billboard width
