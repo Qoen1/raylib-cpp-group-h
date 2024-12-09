@@ -1523,7 +1523,13 @@ RLAPI void DrawBoundingBox(BoundingBox box, Color color);                       
 RLAPI void DrawBillboard(Camera camera, Texture2D texture, Vector3 position, float size, Color tint);   // Draw a billboard texture
 RLAPI void DrawBillboardRec(Camera camera, Texture2D texture, Rectangle source, Vector3 position, Vector2 size, Color tint); // Draw a billboard texture defined by source
 RLAPI void DrawBillboardPro(Camera camera, Texture2D texture, Rectangle source, Vector3 position, Vector3 up, Vector2 size, Vector2 origin, float rotation, Color tint); // Draw a billboard texture defined by source and rotation
-
+/// @brief draws a texture on a 3d plane. note that this does not handle positioning or rotation.
+/// @param camera: the current camera.
+/// @param texture: the texture to be rendered.
+/// @param source: the source rectangle that defines the part of the texture that needs to be rendered.
+/// @param tint: the tint to display on the texture.
+/// @param faceDirection:the direction in which the drawn texture must face.
+RLAPI void DrawTextureOnPlane(Camera camera, Texture2D texture, Rectangle source, Vector2 size, Color tint, Vector3 faceDirection);
 // Mesh management functions
 RLAPI void UploadMesh(Mesh *mesh, bool dynamic);                                            // Upload mesh vertex data in GPU and provide VAO/VBO ids
 RLAPI void UpdateMeshBuffer(Mesh mesh, int index, const void *data, int dataSize, int offset); // Update mesh vertex data in GPU for a specific buffer index

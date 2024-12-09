@@ -3592,6 +3592,69 @@ void DrawBillboardPro(Camera camera, Texture2D texture, Rectangle source, Vector
     rlSetTexture(0);
 }
 
+void DrawTextureOnPlane(Camera camera, Texture2D texture, Rectangle source, Vector2 size, Color tint, Vector3 faceDirection) {
+    Vector3 up = {0,1,0};
+    Vector2 sizeRatio = { size.x*fabsf((float)source.width/source.height), size.y };
+
+    Matrix matView = MatrixLookAt(faceDirection, camera.target, camera.up);
+
+    Vector3 right = { matView.m0, matView.m4, matView.m8 };
+
+    Vector3 rightScaled = Vector3Scale(right, sizeRatio.x/2);
+    Vector3 upScaled = Vector3Scale(up, sizeRatio.y/2);
+
+    Vector3 p1 = Vector3Add(rightScaled, upScaled);
+    Vector3 p2 = Vector3Subtract(rightScaled, upScaled);
+
+    Vector3 topLeft = Vector3Scale(p2, -1);
+    Vector3 topRight = p1;
+    Vector3 bottomRight = p2;
+    Vector3 bottomLeft = Vector3Scale(p1, -1);
+
+    rlSetTexture(texture.id);
+
+    rlBegin(RL_QUADS);
+        rlColor4ub(tint.r, tint.g, tint.b, tint.a);
+
+        if (sizeRatio.x * sizeRatio.y >= 0.0f)
+        {
+            // Bottom-left corner for texture and quad
+            rlTexCoord2f((float)source.x/texture.width, (float)source.y/texture.height);
+            rlVertex3f(topLeft.x, topLeft.y, topLeft.z);
+
+            // Top-left corner for texture and quad
+            rlTexCoord2f((float)source.x/texture.width, (float)(source.y + source.height)/texture.height);
+            rlVertex3f(bottomLeft.x, bottomLeft.y, bottomLeft.z);
+
+            // Top-right corner for texture and quad
+            rlTexCoord2f((float)(source.x + source.width)/texture.width, (float)(source.y + source.height)/texture.height);
+            rlVertex3f(bottomRight.x, bottomRight.y, bottomRight.z);
+
+            // Bottom-right corner for texture and quad
+            rlTexCoord2f((float)(source.x + source.width)/texture.width, (float)source.y/texture.height);
+            rlVertex3f(topRight.x, topRight.y, topRight.z);
+        }
+        else
+        {
+            // Reverse vertex order if the size has only one negative dimension
+            rlTexCoord2f((float)(source.x + source.width)/texture.width, (float)source.y/texture.height);
+            rlVertex3f(topRight.x, topRight.y, topRight.z);
+
+            rlTexCoord2f((float)(source.x + source.width)/texture.width, (float)(source.y + source.height)/texture.height);
+            rlVertex3f(bottomRight.x, bottomRight.y, bottomRight.z);
+
+            rlTexCoord2f((float)source.x/texture.width, (float)(source.y + source.height)/texture.height);
+            rlVertex3f(bottomLeft.x, bottomLeft.y, bottomLeft.z);
+
+            rlTexCoord2f((float)source.x/texture.width, (float)source.y/texture.height);
+            rlVertex3f(topLeft.x, topLeft.y, topLeft.z);
+        }
+
+    rlEnd();
+
+    rlSetTexture(0);
+}
+
 // Draw a bounding box with wires
 void DrawBoundingBox(BoundingBox box, Color color)
 {
