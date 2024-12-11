@@ -3596,7 +3596,7 @@ void DrawTextureOnPlane(Camera camera, Texture2D texture, Rectangle source, Vect
     Vector3 up = {0,1,0};
     Vector2 sizeRatio = { size.x*fabsf((float)source.width/source.height), size.y };
 
-    Matrix matView = MatrixLookAt(faceDirection, camera.target, camera.up);
+    Matrix matView = MatrixLookAt(faceDirection, {0,0,0}, camera.up);
 
     Vector3 right = { matView.m0, matView.m4, matView.m8 };
 
