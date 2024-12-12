@@ -51,7 +51,7 @@ int main(void)
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
-            ClearBackground(RAYWHITE);
+            ClearBackground(rl_RAYWHITE);
             
             for (int i = 0; i < tCount; ++i)
             {
@@ -59,12 +59,12 @@ int main(void)
                 if ((touchPositions[i].x > 0) && (touchPositions[i].y > 0))
                 {
                     // Draw circle and touch index number
-                    DrawCircleV(touchPositions[i], 34, ORANGE);
-                    DrawText(TextFormat("%d", i), (int)touchPositions[i].x - 10, (int)touchPositions[i].y - 70, 40, BLACK);
+                    DrawCircleV(touchPositions[i], 34, rl_ORANGE);
+                    DrawText(TextFormat("%d", i), (int)touchPositions[i].x - 10, (int)touchPositions[i].y - 70, 40, rl_BLACK);
                 }
             }
 
-            DrawText("touch the screen at multiple locations to get multiple balls", 10, 10, 20, DARKGRAY);
+            DrawText("touch the screen at multiple locations to get multiple balls", 10, 10, 20, rl_DARKGRAY);
 
         EndDrawing();
         //----------------------------------------------------------------------------------

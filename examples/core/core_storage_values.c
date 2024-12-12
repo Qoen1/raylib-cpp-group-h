@@ -76,16 +76,16 @@ int main(void)
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
-            ClearBackground(RAYWHITE);
+            ClearBackground(rl_RAYWHITE);
 
-            DrawText(TextFormat("SCORE: %i", score), 280, 130, 40, MAROON);
-            DrawText(TextFormat("HI-SCORE: %i", hiscore), 210, 200, 50, BLACK);
+            DrawText(TextFormat("SCORE: %i", score), 280, 130, 40, rl_MAROON);
+            DrawText(TextFormat("HI-SCORE: %i", hiscore), 210, 200, 50, rl_BLACK);
 
-            DrawText(TextFormat("frames: %i", framesCounter), 10, 10, 20, LIME);
+            DrawText(TextFormat("frames: %i", framesCounter), 10, 10, 20, rl_LIME);
 
-            DrawText("Press R to generate random numbers", 220, 40, 20, LIGHTGRAY);
-            DrawText("Press ENTER to SAVE values", 250, 310, 20, LIGHTGRAY);
-            DrawText("Press SPACE to LOAD values", 252, 350, 20, LIGHTGRAY);
+            DrawText("Press R to generate random numbers", 220, 40, 20, rl_LIGHTGRAY);
+            DrawText("Press ENTER to SAVE values", 250, 310, 20, rl_LIGHTGRAY);
+            DrawText("Press SPACE to LOAD values", 252, 350, 20, rl_LIGHTGRAY);
 
         EndDrawing();
         //----------------------------------------------------------------------------------

@@ -118,7 +118,7 @@ int main(void)
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
-            ClearBackground(RAYWHITE);
+            ClearBackground(rl_RAYWHITE);
 
             BeginShaderMode(shader);
 
@@ -131,9 +131,9 @@ int main(void)
 
             EndShaderMode();
 
-            DrawText("< >", 10, 10, 30, DARKBLUE);
-            DrawText("CURRENT PALETTE:", 60, 15, 20, RAYWHITE);
-            DrawText(paletteText[currentPalette], 300, 15, 20, RED);
+            DrawText("< >", 10, 10, 30, rl_DARKBLUE);
+            DrawText("CURRENT PALETTE:", 60, 15, 20, rl_RAYWHITE);
+            DrawText(paletteText[currentPalette], 300, 15, 20, rl_RED);
 
             DrawFPS(700, 15);
 

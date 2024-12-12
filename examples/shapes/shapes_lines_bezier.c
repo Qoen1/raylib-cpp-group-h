@@ -61,16 +61,16 @@ int main(void)
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
-            ClearBackground(RAYWHITE);
+            ClearBackground(rl_RAYWHITE);
 
-            DrawText("MOVE START-END POINTS WITH MOUSE", 15, 20, 20, GRAY);
+            DrawText("MOVE START-END POINTS WITH MOUSE", 15, 20, 20, rl_GRAY);
 
             // Draw line Cubic Bezier, in-out interpolation (easing), no control points
-            DrawLineBezier(startPoint, endPoint, 4.0f, BLUE);
+            DrawLineBezier(startPoint, endPoint, 4.0f, rl_BLUE);
             
             // Draw start-end spline circles with some details
-            DrawCircleV(startPoint, CheckCollisionPointCircle(mouse, startPoint, 10.0f)? 14 : 8, moveStartPoint? RED : BLUE);
-            DrawCircleV(endPoint, CheckCollisionPointCircle(mouse, endPoint, 10.0f)? 14 : 8, moveEndPoint? RED : BLUE);
+            DrawCircleV(startPoint, CheckCollisionPointCircle(mouse, startPoint, 10.0f)? 14 : 8, moveStartPoint? rl_RED : rl_BLUE);
+            DrawCircleV(endPoint, CheckCollisionPointCircle(mouse, endPoint, 10.0f)? 14 : 8, moveEndPoint? rl_RED : rl_BLUE);
 
         EndDrawing();
         //----------------------------------------------------------------------------------

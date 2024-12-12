@@ -54,24 +54,24 @@ int main(void)
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
-            ClearBackground(RAYWHITE);
+            ClearBackground(rl_RAYWHITE);
 
             BeginMode3D(camera);
 
-                DrawCube(cubePosition, 2.0f, 2.0f, 2.0f, RED);
-                DrawCubeWires(cubePosition, 2.0f, 2.0f, 2.0f, MAROON);
+                DrawCube(cubePosition, 2.0f, 2.0f, 2.0f, rl_RED);
+                DrawCubeWires(cubePosition, 2.0f, 2.0f, 2.0f, rl_MAROON);
 
                 DrawGrid(10, 1.0f);
 
             EndMode3D();
 
-            DrawRectangle( 10, 10, 320, 93, Fade(SKYBLUE, 0.5f));
-            DrawRectangleLines( 10, 10, 320, 93, BLUE);
+            DrawRectangle( 10, 10, 320, 93, Fade(rl_SKYBLUE, 0.5f));
+            DrawRectangleLines( 10, 10, 320, 93, rl_BLUE);
 
-            DrawText("Free camera default controls:", 20, 20, 10, BLACK);
-            DrawText("- Mouse Wheel to Zoom in-out", 40, 40, 10, DARKGRAY);
-            DrawText("- Mouse Wheel Pressed to Pan", 40, 60, 10, DARKGRAY);
-            DrawText("- Z to zoom to (0, 0, 0)", 40, 80, 10, DARKGRAY);
+            DrawText("Free camera default controls:", 20, 20, 10, rl_BLACK);
+            DrawText("- Mouse Wheel to Zoom in-out", 40, 40, 10, rl_DARKGRAY);
+            DrawText("- Mouse Wheel Pressed to Pan", 40, 60, 10, rl_DARKGRAY);
+            DrawText("- Z to zoom to (0, 0, 0)", 40, 80, 10, rl_DARKGRAY);
 
         EndDrawing();
         //----------------------------------------------------------------------------------

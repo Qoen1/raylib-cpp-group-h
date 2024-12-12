@@ -105,7 +105,7 @@ int main(void)
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
-            ClearBackground(DARKGRAY);
+            ClearBackground(rl_DARKGRAY);
 
             BeginBlendMode(blending);
 
@@ -120,10 +120,10 @@ int main(void)
 
             EndBlendMode();
 
-            DrawText("PRESS SPACE to CHANGE BLENDING MODE", 180, 20, 20, BLACK);
+            DrawText("PRESS SPACE to CHANGE BLENDING MODE", 180, 20, 20, rl_BLACK);
 
-            if (blending == BLEND_ALPHA) DrawText("ALPHA BLENDING", 290, screenHeight - 40, 20, BLACK);
-            else DrawText("ADDITIVE BLENDING", 280, screenHeight - 40, 20, RAYWHITE);
+            if (blending == BLEND_ALPHA) DrawText("ALPHA BLENDING", 290, screenHeight - 40, 20, rl_BLACK);
+            else DrawText("ADDITIVE BLENDING", 280, screenHeight - 40, 20, rl_RAYWHITE);
 
         EndDrawing();
         //----------------------------------------------------------------------------------

@@ -74,19 +74,19 @@ int main(void)
         //----------------------------------------------------------------------------------
         BeginDrawing();
         
-            ClearBackground(RAYWHITE);
+            ClearBackground(rl_RAYWHITE);
 
             BeginMode3D(camera);
             
                 BeginShaderMode(shader);
-                    DrawModel(model, (Vector3){ 0.0f, 0.0f, 0.0f }, 2.0f, WHITE);
+                    DrawModel(model, (Vector3){ 0.0f, 0.0f, 0.0f }, 2.0f, rl_WHITE);
                 EndShaderMode();
 
                 DrawGrid(10, 1.0f);
                 
             EndMode3D();
 
-            DrawText("Use mouse to rotate the camera", 10, 10, 20, DARKGRAY);
+            DrawText("Use mouse to rotate the camera", 10, 10, 20, rl_DARKGRAY);
 
         EndDrawing();
         //----------------------------------------------------------------------------------

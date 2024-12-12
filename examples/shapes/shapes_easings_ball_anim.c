@@ -95,12 +95,12 @@ int main(void)
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
-            ClearBackground(RAYWHITE);
+            ClearBackground(rl_RAYWHITE);
 
-            if (state >= 2) DrawRectangle(0, 0, screenWidth, screenHeight, GREEN);
-            DrawCircle(ballPositionX, 200, (float)ballRadius, Fade(RED, 1.0f - ballAlpha));
+            if (state >= 2) DrawRectangle(0, 0, screenWidth, screenHeight, rl_GREEN);
+            DrawCircle(ballPositionX, 200, (float)ballRadius, Fade(rl_RED, 1.0f - ballAlpha));
 
-            if (state == 3) DrawText("PRESS [ENTER] TO PLAY AGAIN!", 240, 200, 20, BLACK);
+            if (state == 3) DrawText("PRESS [ENTER] TO PLAY AGAIN!", 240, 200, 20, rl_BLACK);
 
         EndDrawing();
         //----------------------------------------------------------------------------------

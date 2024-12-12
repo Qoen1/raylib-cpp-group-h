@@ -45,11 +45,11 @@ int main(void)
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
-            ClearBackground(RAYWHITE);
+            ClearBackground(rl_RAYWHITE);
 
-            DrawText("move the ball with arrow keys", 10, 10, 20, DARKGRAY);
+            DrawText("move the ball with arrow keys", 10, 10, 20, rl_DARKGRAY);
 
-            DrawCircleV(ballPosition, 50, MAROON);
+            DrawCircleV(ballPosition, 50, rl_MAROON);
 
         EndDrawing();
         //----------------------------------------------------------------------------------

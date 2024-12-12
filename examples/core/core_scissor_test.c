@@ -49,19 +49,19 @@ int main(void)
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
-            ClearBackground(RAYWHITE);
+            ClearBackground(rl_RAYWHITE);
 
             if (scissorMode) BeginScissorMode((int)scissorArea.x, (int)scissorArea.y, (int)scissorArea.width, (int)scissorArea.height);
 
             // Draw full screen rectangle and some text
             // NOTE: Only part defined by scissor area will be rendered
-            DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), RED);
-            DrawText("Move the mouse around to reveal this text!", 190, 200, 20, LIGHTGRAY);
+            DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), rl_RED);
+            DrawText("Move the mouse around to reveal this text!", 190, 200, 20, rl_LIGHTGRAY);
 
             if (scissorMode) EndScissorMode();
 
-            DrawRectangleLinesEx(scissorArea, 1, BLACK);
-            DrawText("Press S to toggle scissor test", 10, 10, 20, BLACK);
+            DrawRectangleLinesEx(scissorArea, 1, rl_BLACK);
+            DrawText("Press S to toggle scissor test", 10, 10, 20, rl_BLACK);
 
         EndDrawing();
         //----------------------------------------------------------------------------------

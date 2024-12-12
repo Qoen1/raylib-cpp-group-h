@@ -43,12 +43,12 @@ int main(void)
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
-            ClearBackground(RAYWHITE);
+            ClearBackground(rl_RAYWHITE);
 
-            DrawRectangle(screenWidth/2 - 40, boxPositionY, 80, 80, MAROON);
+            DrawRectangle(screenWidth/2 - 40, boxPositionY, 80, 80, rl_MAROON);
 
-            DrawText("Use mouse wheel to move the cube up and down!", 10, 10, 20, GRAY);
-            DrawText(TextFormat("Box position Y: %03i", boxPositionY), 10, 40, 20, LIGHTGRAY);
+            DrawText("Use mouse wheel to move the cube up and down!", 10, 10, 20, rl_GRAY);
+            DrawText(TextFormat("Box position Y: %03i", boxPositionY), 10, 40, 20, rl_LIGHTGRAY);
 
         EndDrawing();
         //----------------------------------------------------------------------------------

@@ -48,14 +48,14 @@ int main(void)
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
-            ClearBackground(RAYWHITE);
+            ClearBackground(rl_RAYWHITE);
 
-            DrawTexture(texture, screenWidth/2 - texture.width/2, screenHeight/2 - texture.height/2, WHITE);
+            DrawTexture(texture, screenWidth/2 - texture.width/2, screenHeight/2 - texture.height/2, rl_WHITE);
 
             //Red border to illustrate how the SVG is centered within the specified dimensions
-            DrawRectangleLines((screenWidth / 2 - texture.width / 2) - 1, (screenHeight / 2 - texture.height / 2) - 1, texture.width + 2, texture.height + 2, RED);
+            DrawRectangleLines((screenWidth / 2 - texture.width / 2) - 1, (screenHeight / 2 - texture.height / 2) - 1, texture.width + 2, texture.height + 2, rl_RED);
 
-            DrawText("this IS a texture loaded from an SVG file!", 300, 410, 10, GRAY);
+            DrawText("this IS a texture loaded from an SVG file!", 300, 410, 10, rl_GRAY);
 
         EndDrawing();
         //----------------------------------------------------------------------------------

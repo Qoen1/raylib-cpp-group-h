@@ -70,22 +70,22 @@ int main(void)
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
-            ClearBackground(RAYWHITE);
+            ClearBackground(rl_RAYWHITE);
 
-            if (filePathCounter == 0) DrawText("Drop your files to this window!", 100, 40, 20, DARKGRAY);
+            if (filePathCounter == 0) DrawText("Drop your files to this window!", 100, 40, 20, rl_DARKGRAY);
             else
             {
-                DrawText("Dropped files:", 100, 40, 20, DARKGRAY);
+                DrawText("Dropped files:", 100, 40, 20, rl_DARKGRAY);
 
                 for (int i = 0; i < filePathCounter; i++)
                 {
-                    if (i%2 == 0) DrawRectangle(0, 85 + 40*i, screenWidth, 40, Fade(LIGHTGRAY, 0.5f));
-                    else DrawRectangle(0, 85 + 40*i, screenWidth, 40, Fade(LIGHTGRAY, 0.3f));
+                    if (i%2 == 0) DrawRectangle(0, 85 + 40*i, screenWidth, 40, Fade(rl_LIGHTGRAY, 0.5f));
+                    else DrawRectangle(0, 85 + 40*i, screenWidth, 40, Fade(rl_LIGHTGRAY, 0.3f));
 
-                    DrawText(filePaths[i], 120, 100 + 40*i, 10, GRAY);
+                    DrawText(filePaths[i], 120, 100 + 40*i, 10, rl_GRAY);
                 }
 
-                DrawText("Drop new files...", 100, 110 + 40*filePathCounter, 20, DARKGRAY);
+                DrawText("Drop new files...", 100, 110 + 40*filePathCounter, 20, rl_DARKGRAY);
             }
 
         EndDrawing();

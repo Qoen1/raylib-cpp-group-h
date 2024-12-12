@@ -90,12 +90,12 @@ int main(void)
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
-            ClearBackground(RAYWHITE);
+            ClearBackground(rl_RAYWHITE);
 
             BeginShaderMode(shader);
 
-                DrawTexture(texture, 0, 0, WHITE);
-                DrawTexture(texture, texture.width, 0, WHITE);
+                DrawTexture(texture, 0, 0, rl_WHITE);
+                DrawTexture(texture, texture.width, 0, rl_WHITE);
 
             EndShaderMode();
 

@@ -123,7 +123,7 @@ int main(void)
             switch (currentProcess)
             {
                 case COLOR_GRAYSCALE: ImageColorGrayscale(&imCopy); break;
-                case COLOR_TINT: ImageColorTint(&imCopy, GREEN); break;
+                case COLOR_TINT: ImageColorTint(&imCopy, rl_GREEN); break;
                 case COLOR_INVERT: ImageColorInvert(&imCopy); break;
                 case COLOR_CONTRAST: ImageColorContrast(&imCopy, -40); break;
                 case COLOR_BRIGHTNESS: ImageColorBrightness(&imCopy, -80); break;
@@ -145,20 +145,20 @@ int main(void)
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
-            ClearBackground(RAYWHITE);
+            ClearBackground(rl_RAYWHITE);
 
-            DrawText("IMAGE PROCESSING:", 40, 30, 10, DARKGRAY);
+            DrawText("IMAGE PROCESSING:", 40, 30, 10, rl_DARKGRAY);
 
             // Draw rectangles
             for (int i = 0; i < NUM_PROCESSES; i++)
             {
-                DrawRectangleRec(toggleRecs[i], ((i == currentProcess) || (i == mouseHoverRec)) ? SKYBLUE : LIGHTGRAY);
-                DrawRectangleLines((int)toggleRecs[i].x, (int) toggleRecs[i].y, (int) toggleRecs[i].width, (int) toggleRecs[i].height, ((i == currentProcess) || (i == mouseHoverRec)) ? BLUE : GRAY);
-                DrawText( processText[i], (int)( toggleRecs[i].x + toggleRecs[i].width/2 - MeasureText(processText[i], 10)/2), (int) toggleRecs[i].y + 11, 10, ((i == currentProcess) || (i == mouseHoverRec)) ? DARKBLUE : DARKGRAY);
+                DrawRectangleRec(toggleRecs[i], ((i == currentProcess) || (i == mouseHoverRec)) ? rl_SKYBLUE : rl_LIGHTGRAY);
+                DrawRectangleLines((int)toggleRecs[i].x, (int) toggleRecs[i].y, (int) toggleRecs[i].width, (int) toggleRecs[i].height, ((i == currentProcess) || (i == mouseHoverRec)) ? rl_BLUE : rl_GRAY);
+                DrawText( processText[i], (int)( toggleRecs[i].x + toggleRecs[i].width/2 - MeasureText(processText[i], 10)/2), (int) toggleRecs[i].y + 11, 10, ((i == currentProcess) || (i == mouseHoverRec)) ? rl_DARKBLUE : rl_DARKGRAY);
             }
 
-            DrawTexture(texture, screenWidth - texture.width - 60, screenHeight/2 - texture.height/2, WHITE);
-            DrawRectangleLines(screenWidth - texture.width - 60, screenHeight/2 - texture.height/2, texture.width, texture.height, BLACK);
+            DrawTexture(texture, screenWidth - texture.width - 60, screenHeight/2 - texture.height/2, rl_WHITE);
+            DrawRectangleLines(screenWidth - texture.width - 60, screenHeight/2 - texture.height/2, texture.width, texture.height, rl_BLACK);
 
         EndDrawing();
         //----------------------------------------------------------------------------------

@@ -60,50 +60,50 @@ int main(void)
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
-            ClearBackground(RAYWHITE);
+            ClearBackground(rl_RAYWHITE);
 
             // Start drawing with default shader
 
-            DrawText("USING DEFAULT SHADER", 20, 40, 10, RED);
+            DrawText("USING DEFAULT SHADER", 20, 40, 10, rl_RED);
 
-            DrawCircle(80, 120, 35, DARKBLUE);
-            DrawCircleGradient(80, 220, 60, GREEN, SKYBLUE);
-            DrawCircleLines(80, 340, 80, DARKBLUE);
+            DrawCircle(80, 120, 35, rl_DARKBLUE);
+            DrawCircleGradient(80, 220, 60, rl_GREEN, rl_SKYBLUE);
+            DrawCircleLines(80, 340, 80, rl_DARKBLUE);
 
 
             // Activate our custom shader to be applied on next shapes/textures drawings
             BeginShaderMode(shader);
 
-                DrawText("USING CUSTOM SHADER", 190, 40, 10, RED);
+                DrawText("USING CUSTOM SHADER", 190, 40, 10, rl_RED);
 
-                DrawRectangle(250 - 60, 90, 120, 60, RED);
-                DrawRectangleGradientH(250 - 90, 170, 180, 130, MAROON, GOLD);
-                DrawRectangleLines(250 - 40, 320, 80, 60, ORANGE);
+                DrawRectangle(250 - 60, 90, 120, 60, rl_RED);
+                DrawRectangleGradientH(250 - 90, 170, 180, 130, rl_MAROON, RL_GOLD);
+                DrawRectangleLines(250 - 40, 320, 80, 60, rl_ORANGE);
 
             // Activate our default shader for next drawings
             EndShaderMode();
 
-            DrawText("USING DEFAULT SHADER", 370, 40, 10, RED);
+            DrawText("USING DEFAULT SHADER", 370, 40, 10, rl_RED);
 
             DrawTriangle((Vector2){430, 80},
                          (Vector2){430 - 60, 150},
-                         (Vector2){430 + 60, 150}, VIOLET);
+                         (Vector2){430 + 60, 150}, rl_VIOLET);
 
             DrawTriangleLines((Vector2){430, 160},
                               (Vector2){430 - 20, 230},
-                              (Vector2){430 + 20, 230}, DARKBLUE);
+                              (Vector2){430 + 20, 230}, rl_DARKBLUE);
 
-            DrawPoly((Vector2){430, 320}, 6, 80, 0, BROWN);
+            DrawPoly((Vector2){430, 320}, 6, 80, 0, rl_BROWN);
 
             // Activate our custom shader to be applied on next shapes/textures drawings
             BeginShaderMode(shader);
 
-                DrawTexture(fudesumi, 500, -30, WHITE);    // Using custom shader
+                DrawTexture(fudesumi, 500, -30, rl_WHITE);    // Using custom shader
 
             // Activate our default shader for next drawings
             EndShaderMode();
 
-            DrawText("(c) Fudesumi sprite by Eiden Marsal", 380, screenHeight - 20, 10, GRAY);
+            DrawText("(c) Fudesumi sprite by Eiden Marsal", 380, screenHeight - 20, 10, rl_GRAY);
 
         EndDrawing();
         //----------------------------------------------------------------------------------

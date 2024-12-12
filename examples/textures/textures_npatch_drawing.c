@@ -84,20 +84,20 @@ int main(void)
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
-            ClearBackground(RAYWHITE);
+            ClearBackground(rl_RAYWHITE);
 
             // Draw the n-patches
-            DrawTextureNPatch(nPatchTexture, ninePatchInfo2, dstRec2, origin, 0.0f, WHITE);
-            DrawTextureNPatch(nPatchTexture, ninePatchInfo1, dstRec1, origin, 0.0f, WHITE);
-            DrawTextureNPatch(nPatchTexture, h3PatchInfo, dstRecH, origin, 0.0f, WHITE);
-            DrawTextureNPatch(nPatchTexture, v3PatchInfo, dstRecV, origin, 0.0f, WHITE);
+            DrawTextureNPatch(nPatchTexture, ninePatchInfo2, dstRec2, origin, 0.0f, rl_WHITE);
+            DrawTextureNPatch(nPatchTexture, ninePatchInfo1, dstRec1, origin, 0.0f, rl_WHITE);
+            DrawTextureNPatch(nPatchTexture, h3PatchInfo, dstRecH, origin, 0.0f, rl_WHITE);
+            DrawTextureNPatch(nPatchTexture, v3PatchInfo, dstRecV, origin, 0.0f, rl_WHITE);
 
             // Draw the source texture
-            DrawRectangleLines(5, 88, 74, 266, BLUE);
-            DrawTexture(nPatchTexture, 10, 93, WHITE);
-            DrawText("TEXTURE", 15, 360, 10, DARKGRAY);
+            DrawRectangleLines(5, 88, 74, 266, rl_BLUE);
+            DrawTexture(nPatchTexture, 10, 93, rl_WHITE);
+            DrawText("TEXTURE", 15, 360, 10, rl_DARKGRAY);
 
-            DrawText("Move the mouse to stretch or shrink the n-patches", 10, 20, 20, DARKGRAY);
+            DrawText("Move the mouse to stretch or shrink the n-patches", 10, 20, 20, rl_DARKGRAY);
 
         EndDrawing();
         //----------------------------------------------------------------------------------

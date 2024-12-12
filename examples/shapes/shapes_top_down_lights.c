@@ -89,14 +89,14 @@ void DrawLightMask(int slot)
     // Use the light mask
     BeginTextureMode(lights[slot].mask);
 
-        ClearBackground(WHITE);
+        ClearBackground(rl_WHITE);
 
         // Force the blend mode to only set the alpha of the destination
         rlSetBlendFactors(RLGL_SRC_ALPHA, RLGL_SRC_ALPHA, RLGL_MIN);
         rlSetBlendMode(BLEND_CUSTOM);
 
         // If we are valid, then draw the light radius to the alpha mask
-        if (lights[slot].valid) DrawCircleGradient((int)lights[slot].position.x, (int)lights[slot].position.y, lights[slot].outerRadius, ColorAlpha(WHITE, 0), WHITE);
+        if (lights[slot].valid) DrawCircleGradient((int)lights[slot].position.x, (int)lights[slot].position.y, lights[slot].outerRadius, ColorAlpha(rl_WHITE, 0), rl_WHITE);
         
         rlDrawRenderBatchActive();
 
@@ -108,7 +108,7 @@ void DrawLightMask(int slot)
         // Draw the shadows to the alpha mask
         for (int i = 0; i < lights[slot].shadowCount; i++)
         {
-            DrawTriangleFan(lights[slot].shadows[i].vertices, 4, WHITE);
+            DrawTriangleFan(lights[slot].shadows[i].vertices, 4, rl_WHITE);
         }
 
         rlDrawRenderBatchActive();
@@ -226,7 +226,7 @@ int main(void)
     SetupBoxes(boxes, &boxCount);
 
     // Create a checkerboard ground texture
-    Image img = GenImageChecked(64, 64, 32, 32, DARKBROWN, DARKGRAY);
+    Image img = GenImageChecked(64, 64, 32, 32, rl_DARKBROWN, rl_DARKGRAY);
     Texture2D backgroundTexture = LoadTextureFromImage(img);
     UnloadImage(img);
 
@@ -273,7 +273,7 @@ int main(void)
             // Build up the light mask
             BeginTextureMode(lightMask);
             
-                ClearBackground(BLACK);
+                ClearBackground(rl_BLACK);
 
                 // Force the blend mode to only set the alpha of the destination
                 rlSetBlendFactors(RLGL_SRC_ALPHA, RLGL_SRC_ALPHA, RLGL_MIN);
@@ -282,7 +282,7 @@ int main(void)
                 // Merge in all the light masks
                 for (int i = 0; i < MAX_LIGHTS; i++)
                 {
-                    if (lights[i].active) DrawTextureRec(lights[i].mask.texture, (Rectangle){ 0, 0, (float)GetScreenWidth(), -(float)GetScreenHeight() }, Vector2Zero(), WHITE);
+                    if (lights[i].active) DrawTextureRec(lights[i].mask.texture, (Rectangle){ 0, 0, (float)GetScreenWidth(), -(float)GetScreenHeight() }, Vector2Zero(), rl_WHITE);
                 }
 
                 rlDrawRenderBatchActive();
@@ -297,44 +297,44 @@ int main(void)
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
-            ClearBackground(BLACK);
+            ClearBackground(rl_BLACK);
             
             // Draw the tile background
-            DrawTextureRec(backgroundTexture, (Rectangle){ 0, 0, (float)GetScreenWidth(), (float)GetScreenHeight() }, Vector2Zero(), WHITE);
+            DrawTextureRec(backgroundTexture, (Rectangle){ 0, 0, (float)GetScreenWidth(), (float)GetScreenHeight() }, Vector2Zero(), rl_WHITE);
             
             // Overlay the shadows from all the lights
-            DrawTextureRec(lightMask.texture, (Rectangle){ 0, 0, (float)GetScreenWidth(), -(float)GetScreenHeight() }, Vector2Zero(), ColorAlpha(WHITE, showLines? 0.75f : 1.0f));
+            DrawTextureRec(lightMask.texture, (Rectangle){ 0, 0, (float)GetScreenWidth(), -(float)GetScreenHeight() }, Vector2Zero(), ColorAlpha(rl_WHITE, showLines? 0.75f : 1.0f));
 
             // Draw the lights
             for (int i = 0; i < MAX_LIGHTS; i++)
             {
-                if (lights[i].active) DrawCircle((int)lights[i].position.x, (int)lights[i].position.y, 10, (i == 0)? YELLOW : WHITE);
+                if (lights[i].active) DrawCircle((int)lights[i].position.x, (int)lights[i].position.y, 10, (i == 0)? rl_YELLOW : rl_WHITE);
             }
 
             if (showLines)
             {
                 for (int s = 0; s < lights[0].shadowCount; s++)
                 {
-                    DrawTriangleFan(lights[0].shadows[s].vertices, 4, DARKPURPLE);
+                    DrawTriangleFan(lights[0].shadows[s].vertices, 4, rl_DARKPURPLE);
                 }
 
                 for (int b = 0; b < boxCount; b++)
                 {
-                    if (CheckCollisionRecs(boxes[b],lights[0].bounds)) DrawRectangleRec(boxes[b], PURPLE);
+                    if (CheckCollisionRecs(boxes[b],lights[0].bounds)) DrawRectangleRec(boxes[b], rl_PURPLE);
 
-                    DrawRectangleLines((int)boxes[b].x, (int)boxes[b].y, (int)boxes[b].width, (int)boxes[b].height, DARKBLUE);
+                    DrawRectangleLines((int)boxes[b].x, (int)boxes[b].y, (int)boxes[b].width, (int)boxes[b].height, rl_DARKBLUE);
                 }
 
-                DrawText("(F1) Hide Shadow Volumes", 10, 50, 10, GREEN);
+                DrawText("(F1) Hide Shadow Volumes", 10, 50, 10, rl_GREEN);
             }
             else
             {
-                DrawText("(F1) Show Shadow Volumes", 10, 50, 10, GREEN);
+                DrawText("(F1) Show Shadow Volumes", 10, 50, 10, rl_GREEN);
             }
 
             DrawFPS(screenWidth - 80, 10);
-            DrawText("Drag to move light #1", 10, 10, 10, DARKGREEN);
-            DrawText("Right click to add new light", 10, 30, 10, DARKGREEN);
+            DrawText("Drag to move light #1", 10, 10, 10, rl_DARKGREEN);
+            DrawText("Right click to add new light", 10, 30, 10, rl_DARKGREEN);
 
         EndDrawing();
         //----------------------------------------------------------------------------------

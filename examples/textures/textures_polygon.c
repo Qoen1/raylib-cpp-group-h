@@ -87,12 +87,12 @@ int main(void)
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
-            ClearBackground(RAYWHITE);
+            ClearBackground(rl_RAYWHITE);
 
-            DrawText("textured polygon", 20, 20, 20, DARKGRAY);
+            DrawText("textured polygon", 20, 20, 20, rl_DARKGRAY);
 
             DrawTexturePoly(texture, (Vector2){ GetScreenWidth()/2.0f, GetScreenHeight()/2.0f },
-                            positions, texcoords, MAX_POINTS, WHITE);
+                            positions, texcoords, MAX_POINTS, rl_WHITE);
 
         EndDrawing();
         //----------------------------------------------------------------------------------
