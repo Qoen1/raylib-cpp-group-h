@@ -3133,7 +3133,7 @@ Mesh GenMeshCubicmap(Image cubicmap, Vector3 cubeSize)
                 }
 
                 // Checking cube on left of current cube
-                if (((x > 0) && COLOR_EQUAL(pixels[z*cubicmap.width + (x - 1)], BLACK)) || (x == 0))
+                if (((x > 0) && COLOR_EQUAL(pixels[z*cubicmap.width + (x - 1)], rl_BLACK)) || (x == 0))
                 {
                     // Define left triangles (2 tris, 6 vertex) --> v1 v7 v2, v1 v6 v7
                     // NOTE: Collateral occluded faces are not generated
