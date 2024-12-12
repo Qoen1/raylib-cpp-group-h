@@ -3595,8 +3595,9 @@ void DrawBillboardPro(Camera camera, Texture2D texture, Rectangle source, Vector
 void DrawTextureOnPlane(Camera camera, Texture2D texture, Rectangle source, Vector2 size, Color tint, Vector3 faceDirection) {
     Vector3 up = {0,1,0};
     Vector2 sizeRatio = { size.x*fabsf((float)source.width/source.height), size.y };
+    Vector3 correctTarget = {0,0,0};
 
-    Matrix matView = MatrixLookAt(faceDirection, {0,0,0}, camera.up);
+    Matrix matView = MatrixLookAt(faceDirection, correctTarget, camera.up);
 
     Vector3 right = { matView.m0, matView.m4, matView.m8 };
 
