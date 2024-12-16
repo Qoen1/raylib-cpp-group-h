@@ -85,26 +85,26 @@ int main(void)
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
-            ClearBackground(RAYWHITE);
+            ClearBackground(rl_RAYWHITE);
 
-            DrawText("PLACE MOUSE OVER INPUT BOX!", 240, 140, 20, GRAY);
+            DrawText("PLACE MOUSE OVER INPUT BOX!", 240, 140, 20, rl_GRAY);
 
-            DrawRectangleRec(textBox, LIGHTGRAY);
-            if (mouseOnText) DrawRectangleLines((int)textBox.x, (int)textBox.y, (int)textBox.width, (int)textBox.height, RED);
-            else DrawRectangleLines((int)textBox.x, (int)textBox.y, (int)textBox.width, (int)textBox.height, DARKGRAY);
+            DrawRectangleRec(textBox, rl_LIGHTGRAY);
+            if (mouseOnText) DrawRectangleLines((int)textBox.x, (int)textBox.y, (int)textBox.width, (int)textBox.height, rl_RED);
+            else DrawRectangleLines((int)textBox.x, (int)textBox.y, (int)textBox.width, (int)textBox.height, rl_DARKGRAY);
 
-            DrawText(name, (int)textBox.x + 5, (int)textBox.y + 8, 40, MAROON);
+            DrawText(name, (int)textBox.x + 5, (int)textBox.y + 8, 40, rl_MAROON);
 
-            DrawText(TextFormat("INPUT CHARS: %i/%i", letterCount, MAX_INPUT_CHARS), 315, 250, 20, DARKGRAY);
+            DrawText(TextFormat("INPUT CHARS: %i/%i", letterCount, MAX_INPUT_CHARS), 315, 250, 20, rl_DARKGRAY);
 
             if (mouseOnText)
             {
                 if (letterCount < MAX_INPUT_CHARS)
                 {
                     // Draw blinking underscore char
-                    if (((framesCounter/20)%2) == 0) DrawText("_", (int)textBox.x + 8 + MeasureText(name, 40), (int)textBox.y + 12, 40, MAROON);
+                    if (((framesCounter/20)%2) == 0) DrawText("_", (int)textBox.x + 8 + MeasureText(name, 40), (int)textBox.y + 12, 40, rl_MAROON);
                 }
-                else DrawText("Press BACKSPACE to delete chars...", 230, 300, 20, GRAY);
+                else DrawText("Press BACKSPACE to delete chars...", 230, 300, 20, rl_GRAY);
             }
 
         EndDrawing();

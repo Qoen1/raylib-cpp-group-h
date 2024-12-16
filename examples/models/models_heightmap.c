@@ -59,18 +59,18 @@ int main(void)
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
-            ClearBackground(RAYWHITE);
+            ClearBackground(rl_RAYWHITE);
 
             BeginMode3D(camera);
 
-                DrawModel(model, mapPosition, 1.0f, RED);
+                DrawModel(model, mapPosition, 1.0f, rl_RED);
 
                 DrawGrid(20, 1.0f);
 
             EndMode3D();
 
-            DrawTexture(texture, screenWidth - texture.width - 20, 20, WHITE);
-            DrawRectangleLines(screenWidth - texture.width - 20, 20, texture.width, texture.height, GREEN);
+            DrawTexture(texture, screenWidth - texture.width - 20, 20, rl_WHITE);
+            DrawRectangleLines(screenWidth - texture.width - 20, 20, texture.width, texture.height, rl_GREEN);
 
             DrawFPS(10, 10);
 

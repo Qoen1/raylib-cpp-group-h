@@ -50,18 +50,18 @@ int main(void)
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
-            ClearBackground(RAYWHITE);
+            ClearBackground(rl_RAYWHITE);
 
             BeginMode3D(camera);
 
-                DrawCube(cubePosition, 2.0f, 2.0f, 2.0f, RED);
-                DrawCubeWires(cubePosition, 2.0f, 2.0f, 2.0f, MAROON);
+                DrawCube(cubePosition, 2.0f, 2.0f, 2.0f, rl_RED);
+                DrawCubeWires(cubePosition, 2.0f, 2.0f, 2.0f, rl_MAROON);
 
                 DrawGrid(10, 1.0f);
 
             EndMode3D();
 
-            DrawText("Welcome to the third dimension!", 10, 40, 20, DARKGRAY);
+            DrawText("Welcome to the third dimension!", 10, 40, 20, rl_DARKGRAY);
 
             DrawFPS(10, 10);
 

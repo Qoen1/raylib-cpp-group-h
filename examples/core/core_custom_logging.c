@@ -71,9 +71,9 @@ int main(void)
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
-        ClearBackground(RAYWHITE);
+        ClearBackground(rl_RAYWHITE);
 
-        DrawText("Check out the console output to see the custom logger in action!", 60, 200, 20, LIGHTGRAY);
+        DrawText("Check out the console output to see the custom logger in action!", 60, 200, 20, rl_LIGHTGRAY);
 
         EndDrawing();
         //----------------------------------------------------------------------------------

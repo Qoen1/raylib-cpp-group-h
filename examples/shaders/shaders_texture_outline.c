@@ -72,17 +72,17 @@ int main(void)
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
-            ClearBackground(RAYWHITE);
+            ClearBackground(rl_RAYWHITE);
 
             BeginShaderMode(shdrOutline);
 
-                DrawTexture(texture, GetScreenWidth()/2 - texture.width/2, -30, WHITE);
+                DrawTexture(texture, GetScreenWidth()/2 - texture.width/2, -30, rl_WHITE);
 
             EndShaderMode();
 
-            DrawText("Shader-based\ntexture\noutline", 10, 10, 20, GRAY);
-            DrawText("Scroll mouse wheel to\nchange outline size", 10, 72, 20, GRAY);
-            DrawText(TextFormat("Outline size: %i px", (int)outlineSize), 10, 120, 20, MAROON);
+            DrawText("Shader-based\ntexture\noutline", 10, 10, 20, rl_GRAY);
+            DrawText("Scroll mouse wheel to\nchange outline size", 10, 72, 20, rl_GRAY);
+            DrawText(TextFormat("Outline size: %i px", (int)outlineSize), 10, 120, 20, rl_MAROON);
 
             DrawFPS(710, 10);
 

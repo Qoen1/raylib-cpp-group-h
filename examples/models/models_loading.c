@@ -118,22 +118,22 @@ int main(void)
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
-            ClearBackground(RAYWHITE);
+            ClearBackground(rl_RAYWHITE);
 
             BeginMode3D(camera);
 
-                DrawModel(model, position, 1.0f, WHITE);        // Draw 3d model with texture
+                DrawModel(model, position, 1.0f, rl_WHITE);        // Draw 3d model with texture
 
                 DrawGrid(20, 10.0f);         // Draw a grid
 
-                if (selected) DrawBoundingBox(bounds, GREEN);   // Draw selection box
+                if (selected) DrawBoundingBox(bounds, rl_GREEN);   // Draw selection box
 
             EndMode3D();
 
-            DrawText("Drag & drop model to load mesh/texture.", 10, GetScreenHeight() - 20, 10, DARKGRAY);
-            if (selected) DrawText("MODEL SELECTED", GetScreenWidth() - 110, 10, 10, GREEN);
+            DrawText("Drag & drop model to load mesh/texture.", 10, GetScreenHeight() - 20, 10, rl_DARKGRAY);
+            if (selected) DrawText("MODEL SELECTED", GetScreenWidth() - 110, 10, 10, rl_GREEN);
 
-            DrawText("(c) Castle 3D model by Alberto Cano", screenWidth - 200, screenHeight - 20, 10, GRAY);
+            DrawText("(c) Castle 3D model by Alberto Cano", screenWidth - 200, screenHeight - 20, 10, rl_GRAY);
 
             DrawFPS(10, 10);
 

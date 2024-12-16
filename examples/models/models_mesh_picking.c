@@ -85,7 +85,7 @@ int main(void)
         char *hitObjectName = "None";
         collision.distance = FLT_MAX;
         collision.hit = false;
-        Color cursorColor = WHITE;
+        Color cursorColor = rl_WHITE;
 
         // Get ray and test against objects
         ray = GetMouseRay(GetMousePosition(), camera);
@@ -96,7 +96,7 @@ int main(void)
         if ((groundHitInfo.hit) && (groundHitInfo.distance < collision.distance))
         {
             collision = groundHitInfo;
-            cursorColor = GREEN;
+            cursorColor = rl_GREEN;
             hitObjectName = "Ground";
         }
 
@@ -106,7 +106,7 @@ int main(void)
         if ((triHitInfo.hit) && (triHitInfo.distance < collision.distance))
         {
             collision = triHitInfo;
-            cursorColor = PURPLE;
+            cursorColor = rl_PURPLE;
             hitObjectName = "Triangle";
 
             bary = Vector3Barycenter(collision.point, ta, tb, tc);
@@ -118,7 +118,7 @@ int main(void)
         if ((sphereHitInfo.hit) && (sphereHitInfo.distance < collision.distance))
         {
             collision = sphereHitInfo;
-            cursorColor = ORANGE;
+            cursorColor = rl_ORANGE;
             hitObjectName = "Sphere";
         }
 
@@ -128,7 +128,7 @@ int main(void)
         if ((boxHitInfo.hit) && (boxHitInfo.distance < collision.distance))
         {
             collision = boxHitInfo;
-            cursorColor = ORANGE;
+            cursorColor = rl_ORANGE;
             hitObjectName = "Box";
 
             // Check ray collision against model meshes
@@ -151,7 +151,7 @@ int main(void)
             if (meshHitInfo.hit)
             {
                 collision = meshHitInfo;
-                cursorColor = ORANGE;
+                cursorColor = rl_ORANGE;
                 hitObjectName = "Mesh";
             }
         }
@@ -161,72 +161,72 @@ int main(void)
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
-            ClearBackground(RAYWHITE);
+            ClearBackground(rl_RAYWHITE);
 
             BeginMode3D(camera);
 
                 // Draw the tower
                 // WARNING: If scale is different than 1.0f,
                 // not considered by GetRayCollisionModel()
-                DrawModel(tower, towerPos, 1.0f, WHITE);
+                DrawModel(tower, towerPos, 1.0f, rl_WHITE);
 
                 // Draw the test triangle
-                DrawLine3D(ta, tb, PURPLE);
-                DrawLine3D(tb, tc, PURPLE);
-                DrawLine3D(tc, ta, PURPLE);
+                DrawLine3D(ta, tb, rl_PURPLE);
+                DrawLine3D(tb, tc, rl_PURPLE);
+                DrawLine3D(tc, ta, rl_PURPLE);
 
                 // Draw the test sphere
-                DrawSphereWires(sp, sr, 8, 8, PURPLE);
+                DrawSphereWires(sp, sr, 8, 8, rl_PURPLE);
 
                 // Draw the mesh bbox if we hit it
-                if (boxHitInfo.hit) DrawBoundingBox(towerBBox, LIME);
+                if (boxHitInfo.hit) DrawBoundingBox(towerBBox, rl_LIME);
 
                 // If we hit something, draw the cursor at the hit point
                 if (collision.hit)
                 {
                     DrawCube(collision.point, 0.3f, 0.3f, 0.3f, cursorColor);
-                    DrawCubeWires(collision.point, 0.3f, 0.3f, 0.3f, RED);
+                    DrawCubeWires(collision.point, 0.3f, 0.3f, 0.3f, rl_RED);
 
                     Vector3 normalEnd;
                     normalEnd.x = collision.point.x + collision.normal.x;
                     normalEnd.y = collision.point.y + collision.normal.y;
                     normalEnd.z = collision.point.z + collision.normal.z;
 
-                    DrawLine3D(collision.point, normalEnd, RED);
+                    DrawLine3D(collision.point, normalEnd, rl_RED);
                 }
 
-                DrawRay(ray, MAROON);
+                DrawRay(ray, rl_MAROON);
 
                 DrawGrid(10, 10.0f);
 
             EndMode3D();
 
             // Draw some debug GUI text
-            DrawText(TextFormat("Hit Object: %s", hitObjectName), 10, 50, 10, BLACK);
+            DrawText(TextFormat("Hit Object: %s", hitObjectName), 10, 50, 10, rl_BLACK);
 
             if (collision.hit)
             {
                 int ypos = 70;
 
-                DrawText(TextFormat("Distance: %3.2f", collision.distance), 10, ypos, 10, BLACK);
+                DrawText(TextFormat("Distance: %3.2f", collision.distance), 10, ypos, 10, rl_BLACK);
 
                 DrawText(TextFormat("Hit Pos: %3.2f %3.2f %3.2f",
                                     collision.point.x,
                                     collision.point.y,
-                                    collision.point.z), 10, ypos + 15, 10, BLACK);
+                                    collision.point.z), 10, ypos + 15, 10, rl_BLACK);
 
                 DrawText(TextFormat("Hit Norm: %3.2f %3.2f %3.2f",
                                     collision.normal.x,
                                     collision.normal.y,
-                                    collision.normal.z), 10, ypos + 30, 10, BLACK);
+                                    collision.normal.z), 10, ypos + 30, 10, rl_BLACK);
 
                 if (triHitInfo.hit && TextIsEqual(hitObjectName, "Triangle"))
-                    DrawText(TextFormat("Barycenter: %3.2f %3.2f %3.2f",  bary.x, bary.y, bary.z), 10, ypos + 45, 10, BLACK);
+                    DrawText(TextFormat("Barycenter: %3.2f %3.2f %3.2f",  bary.x, bary.y, bary.z), 10, ypos + 45, 10, rl_BLACK);
             }
 
-            DrawText("Right click mouse to toggle camera controls", 10, 430, 10, GRAY);
+            DrawText("Right click mouse to toggle camera controls", 10, 430, 10, rl_GRAY);
 
-            DrawText("(c) Turret 3D model by Alberto Cano", screenWidth - 200, screenHeight - 20, 10, GRAY);
+            DrawText("(c) Turret 3D model by Alberto Cano", screenWidth - 200, screenHeight - 20, 10, rl_GRAY);
 
             DrawFPS(10, 10);
 

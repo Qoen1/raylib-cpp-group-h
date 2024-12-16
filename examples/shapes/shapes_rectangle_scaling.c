@@ -76,18 +76,18 @@ int main(void)
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
-            ClearBackground(RAYWHITE);
+            ClearBackground(rl_RAYWHITE);
 
-            DrawText("Scale rectangle dragging from bottom-right corner!", 10, 10, 20, GRAY);
+            DrawText("Scale rectangle dragging from bottom-right corner!", 10, 10, 20, rl_GRAY);
 
-            DrawRectangleRec(rec, Fade(GREEN, 0.5f));
+            DrawRectangleRec(rec, Fade(rl_GREEN, 0.5f));
 
             if (mouseScaleReady)
             {
-                DrawRectangleLinesEx(rec, 1, RED);
+                DrawRectangleLinesEx(rec, 1, rl_RED);
                 DrawTriangle((Vector2){ rec.x + rec.width - MOUSE_SCALE_MARK_SIZE, rec.y + rec.height },
                              (Vector2){ rec.x + rec.width, rec.y + rec.height },
-                             (Vector2){ rec.x + rec.width, rec.y + rec.height - MOUSE_SCALE_MARK_SIZE }, RED);
+                             (Vector2){ rec.x + rec.width, rec.y + rec.height - MOUSE_SCALE_MARK_SIZE }, rl_RED);
             }
 
         EndDrawing();

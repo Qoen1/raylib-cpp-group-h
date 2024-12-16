@@ -115,12 +115,12 @@ int main(void)
         // Draw
         //----------------------------------------------------------------------------------
         BeginTextureMode(target);
-            ClearBackground(RAYWHITE);
+            ClearBackground(rl_RAYWHITE);
             BeginVrStereoMode(config);
                 BeginMode3D(camera);
 
-                    DrawCube(cubePosition, 2.0f, 2.0f, 2.0f, RED);
-                    DrawCubeWires(cubePosition, 2.0f, 2.0f, 2.0f, MAROON);
+                    DrawCube(cubePosition, 2.0f, 2.0f, 2.0f, rl_RED);
+                    DrawCubeWires(cubePosition, 2.0f, 2.0f, 2.0f, rl_MAROON);
                     DrawGrid(40, 1.0f);
 
                 EndMode3D();
@@ -128,9 +128,9 @@ int main(void)
         EndTextureMode();
         
         BeginDrawing();
-            ClearBackground(RAYWHITE);
+            ClearBackground(rl_RAYWHITE);
             BeginShaderMode(distortion);
-                DrawTexturePro(target.texture, sourceRec, destRec, (Vector2){ 0.0f, 0.0f }, 0.0f, WHITE);
+                DrawTexturePro(target.texture, sourceRec, destRec, (Vector2){ 0.0f, 0.0f }, 0.0f, rl_WHITE);
             EndShaderMode();
             DrawFPS(10, 10);
         EndDrawing();

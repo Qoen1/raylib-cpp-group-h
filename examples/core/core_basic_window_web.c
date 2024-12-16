@@ -78,9 +78,9 @@ void UpdateDrawFrame(void)
     //----------------------------------------------------------------------------------
     BeginDrawing();
 
-        ClearBackground(RAYWHITE);
+        ClearBackground(rl_RAYWHITE);
 
-        DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
+        DrawText("Congrats! You created your first window!", 190, 200, 20, rl_LIGHTGRAY);
 
     EndDrawing();
     //----------------------------------------------------------------------------------

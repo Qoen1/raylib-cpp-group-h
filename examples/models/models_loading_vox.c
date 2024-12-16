@@ -99,21 +99,21 @@ int main(void)
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
-            ClearBackground(RAYWHITE);
+            ClearBackground(rl_RAYWHITE);
 
             // Draw 3D model
             BeginMode3D(camera);
 
-                DrawModel(models[currentModel], (Vector3){ 0, 0, 0 }, 1.0f, WHITE);
+                DrawModel(models[currentModel], (Vector3){ 0, 0, 0 }, 1.0f, rl_WHITE);
                 DrawGrid(10, 1.0);
 
             EndMode3D();
 
             // Display info
-            DrawRectangle(10, 400, 310, 30, Fade(SKYBLUE, 0.5f));
-            DrawRectangleLines(10, 400, 310, 30, Fade(DARKBLUE, 0.5f));
-            DrawText("MOUSE LEFT BUTTON to CYCLE VOX MODELS", 40, 410, 10, BLUE);
-            DrawText(TextFormat("File: %s", GetFileName(voxFileNames[currentModel])), 10, 10, 20, GRAY);
+            DrawRectangle(10, 400, 310, 30, Fade(rl_SKYBLUE, 0.5f));
+            DrawRectangleLines(10, 400, 310, 30, Fade(rl_DARKBLUE, 0.5f));
+            DrawText("MOUSE LEFT BUTTON to CYCLE VOX MODELS", 40, 410, 10, rl_BLUE);
+            DrawText(TextFormat("File: %s", GetFileName(voxFileNames[currentModel])), 10, 10, 20, rl_GRAY);
 
         EndDrawing();
         //----------------------------------------------------------------------------------

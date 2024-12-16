@@ -337,7 +337,7 @@ Font LoadFont(const char *fileName)
 #endif
     {
         Image image = LoadImage(fileName);
-        if (image.data != NULL) font = LoadFontFromImage(image, MAGENTA, FONT_TTF_DEFAULT_FIRST_CHAR);
+        if (image.data != NULL) font = LoadFontFromImage(image, rl_MAGENTA, FONT_TTF_DEFAULT_FIRST_CHAR);
         UnloadImage(image);
     }
 
@@ -459,7 +459,7 @@ Font LoadFontFromImage(Image image, Color key, int firstChar)
 
     // NOTE: We need to remove key color borders from image to avoid weird
     // artifacts on texture scaling when using TEXTURE_FILTER_BILINEAR or TEXTURE_FILTER_TRILINEAR
-    for (int i = 0; i < image.height*image.width; i++) if (COLOR_EQUAL(pixels[i], key)) pixels[i] = BLANK;
+    for (int i = 0; i < image.height*image.width; i++) if (COLOR_EQUAL(pixels[i], key)) pixels[i] = rl_BLANK;
 
     // Create a new image with the processed color data (key color replaced by BLANK)
     Image fontClear = {
@@ -1069,11 +1069,11 @@ bool ExportFontAsCode(Font font, const char *fileName)
 // NOTE: Uses default font
 void DrawFPS(int posX, int posY)
 {
-    Color color = LIME;                         // Good FPS
+    Color color = rl_LIME;                         // Good FPS
     int fps = GetFPS();
 
-    if ((fps < 30) && (fps >= 15)) color = ORANGE;  // Warning FPS
-    else if (fps < 15) color = RED;             // Low FPS
+    if ((fps < 30) && (fps >= 15)) color = rl_ORANGE;  // Warning FPS
+    else if (fps < 15) color = rl_RED;             // Low FPS
 
     DrawText(TextFormat("%2i FPS", fps), posX, posY, 20, color);
 }

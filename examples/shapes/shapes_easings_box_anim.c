@@ -122,11 +122,11 @@ int main(void)
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
-            ClearBackground(RAYWHITE);
+            ClearBackground(rl_RAYWHITE);
 
-            DrawRectanglePro(rec, (Vector2){ rec.width/2, rec.height/2 }, rotation, Fade(BLACK, alpha));
+            DrawRectanglePro(rec, (Vector2){ rec.width/2, rec.height/2 }, rotation, Fade(rl_BLACK, alpha));
 
-            DrawText("PRESS [SPACE] TO RESET BOX ANIMATION!", 10, GetScreenHeight() - 25, 20, LIGHTGRAY);
+            DrawText("PRESS [SPACE] TO RESET BOX ANIMATION!", 10, GetScreenHeight() - 25, 20, rl_LIGHTGRAY);
 
         EndDrawing();
         //----------------------------------------------------------------------------------

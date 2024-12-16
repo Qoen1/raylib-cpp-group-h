@@ -59,11 +59,11 @@ int main(void)
     player.speed = 0;
     player.canJump = false;
     EnvItem envItems[] = {
-        {{ 0, 0, 1000, 400 }, 0, LIGHTGRAY },
-        {{ 0, 400, 1000, 200 }, 1, GRAY },
-        {{ 300, 200, 400, 10 }, 1, GRAY },
-        {{ 250, 300, 100, 10 }, 1, GRAY },
-        {{ 650, 300, 100, 10 }, 1, GRAY }
+        {{ 0, 0, 1000, 400 }, 0, rl_LIGHTGRAY },
+        {{ 0, 400, 1000, 200 }, 1, rl_GRAY },
+        {{ 300, 200, 400, 10 }, 1, rl_GRAY },
+        {{ 250, 300, 100, 10 }, 1, rl_GRAY },
+        {{ 650, 300, 100, 10 }, 1, rl_GRAY }
     };
 
     int envItemsLength = sizeof(envItems)/sizeof(envItems[0]);
@@ -127,24 +127,24 @@ int main(void)
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
-            ClearBackground(LIGHTGRAY);
+            ClearBackground(rl_LIGHTGRAY);
 
             BeginMode2D(camera);
 
                 for (int i = 0; i < envItemsLength; i++) DrawRectangleRec(envItems[i].rect, envItems[i].color);
 
                 Rectangle playerRect = { player.position.x - 20, player.position.y - 40, 40, 40 };
-                DrawRectangleRec(playerRect, RED);
+                DrawRectangleRec(playerRect, rl_RED);
 
             EndMode2D();
 
-            DrawText("Controls:", 20, 20, 10, BLACK);
-            DrawText("- Right/Left to move", 40, 40, 10, DARKGRAY);
-            DrawText("- Space to jump", 40, 60, 10, DARKGRAY);
-            DrawText("- Mouse Wheel to Zoom in-out, R to reset zoom", 40, 80, 10, DARKGRAY);
-            DrawText("- C to change camera mode", 40, 100, 10, DARKGRAY);
-            DrawText("Current camera mode:", 20, 120, 10, BLACK);
-            DrawText(cameraDescriptions[cameraOption], 40, 140, 10, DARKGRAY);
+            DrawText("Controls:", 20, 20, 10, rl_BLACK);
+            DrawText("- Right/Left to move", 40, 40, 10, rl_DARKGRAY);
+            DrawText("- Space to jump", 40, 60, 10, rl_DARKGRAY);
+            DrawText("- Mouse Wheel to Zoom in-out, R to reset zoom", 40, 80, 10, rl_DARKGRAY);
+            DrawText("- C to change camera mode", 40, 100, 10, rl_DARKGRAY);
+            DrawText("Current camera mode:", 20, 120, 10, rl_BLACK);
+            DrawText(cameraDescriptions[cameraOption], 40, 140, 10, rl_DARKGRAY);
 
         EndDrawing();
         //----------------------------------------------------------------------------------

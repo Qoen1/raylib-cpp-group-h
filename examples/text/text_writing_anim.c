@@ -47,12 +47,12 @@ int main(void)
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
-            ClearBackground(RAYWHITE);
+            ClearBackground(rl_RAYWHITE);
 
-            DrawText(TextSubtext(message, 0, framesCounter/10), 210, 160, 20, MAROON);
+            DrawText(TextSubtext(message, 0, framesCounter/10), 210, 160, 20, rl_MAROON);
 
-            DrawText("PRESS [ENTER] to RESTART!", 240, 260, 20, LIGHTGRAY);
-            DrawText("PRESS [SPACE] to SPEED UP!", 239, 300, 20, LIGHTGRAY);
+            DrawText("PRESS [ENTER] to RESTART!", 240, 260, 20, rl_LIGHTGRAY);
+            DrawText("PRESS [SPACE] to SPEED UP!", 239, 300, 20, rl_LIGHTGRAY);
 
         EndDrawing();
         //----------------------------------------------------------------------------------
