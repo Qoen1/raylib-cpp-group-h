@@ -33,6 +33,7 @@
 
 #define MAX_CUBES   30
 
+// GBuffer data
 typedef struct GBuffer {
     unsigned int framebuffer;
 
@@ -43,6 +44,7 @@ typedef struct GBuffer {
     unsigned int depthRenderbuffer;
 } GBuffer;
 
+// Deferred mode passes
 typedef enum {
    DEFERRED_POSITION,
    DEFERRED_NORMAL,
@@ -83,7 +85,7 @@ int main(void)
 
     // Initialize the G-buffer
     GBuffer gBuffer = { 0 };
-    gBuffer.framebuffer = rlLoadFramebuffer(screenWidth, screenHeight);
+    gBuffer.framebuffer = rlLoadFramebuffer();
 
     if (!gBuffer.framebuffer)
     {
@@ -141,10 +143,10 @@ int main(void)
     // Create lights
     //--------------------------------------------------------------------------------------
     Light lights[MAX_LIGHTS] = { 0 };
-    lights[0] = CreateLight(LIGHT_POINT, (Vector3){ -2, 1, -2 }, Vector3Zero(), rl_YELLOW, deferredShader);
-    lights[1] = CreateLight(LIGHT_POINT, (Vector3){ 2, 1, 2 }, Vector3Zero(), rl_RED, deferredShader);
-    lights[2] = CreateLight(LIGHT_POINT, (Vector3){ -2, 1, 2 }, Vector3Zero(), rl_GREEN, deferredShader);
-    lights[3] = CreateLight(LIGHT_POINT, (Vector3){ 2, 1, -2 }, Vector3Zero(), rl_BLUE, deferredShader);
+    lights[0] = CreateLight(LIGHT_POINT, (Vector3){ -2, 1, -2 }, Vector3Zero(), YELLOW, deferredShader);
+    lights[1] = CreateLight(LIGHT_POINT, (Vector3){ 2, 1, 2 }, Vector3Zero(), RED, deferredShader);
+    lights[2] = CreateLight(LIGHT_POINT, (Vector3){ -2, 1, 2 }, Vector3Zero(), GREEN, deferredShader);
+    lights[3] = CreateLight(LIGHT_POINT, (Vector3){ 2, 1, -2 }, Vector3Zero(), BLUE, deferredShader);
 
     const float CUBE_SCALE = 0.25;
     Vector3 cubePositions[MAX_CUBES] = { 0 };
@@ -199,7 +201,7 @@ int main(void)
         // ---------------------------------------------------------------------------------
         BeginDrawing();
         
-            ClearBackground(rl_RAYWHITE);
+            ClearBackground(RAYWHITE);
         
             // Draw to the geometry buffer by first activating it
             rlEnableFramebuffer(gBuffer.framebuffer);
@@ -212,13 +214,13 @@ int main(void)
                 rlEnableShader(gbufferShader.id);
                     // When drawing a model here, make sure that the material's shaders
                     // are set to the gbuffer shader!
-                    DrawModel(model, Vector3Zero(), 1.0f, rl_WHITE);
-                    DrawModel(cube, (Vector3) { 0.0, 1.0f, 0.0 }, 1.0f, rl_WHITE);
+                    DrawModel(model, Vector3Zero(), 1.0f, WHITE);
+                    DrawModel(cube, (Vector3) { 0.0, 1.0f, 0.0 }, 1.0f, WHITE);
 
                     for (int i = 0; i < MAX_CUBES; i++)
                     {
                         Vector3 position = cubePositions[i];
-                        DrawModelEx(cube, position, (Vector3) { 1, 1, 1 }, cubeRotations[i], (Vector3) { CUBE_SCALE, CUBE_SCALE, CUBE_SCALE }, rl_WHITE);
+                        DrawModelEx(cube, position, (Vector3) { 1, 1, 1 }, cubeRotations[i], (Vector3) { CUBE_SCALE, CUBE_SCALE, CUBE_SCALE }, WHITE);
                     }
 
                 rlDisableShader();
@@ -254,8 +256,8 @@ int main(void)
                     EndMode3D();
 
                     // As a last step, we now copy over the depth buffer from our g-buffer to the default framebuffer.
-                    rlEnableFramebuffer(gBuffer.framebuffer); //glBindFramebuffer(GL_READ_FRAMEBUFFER, gBuffer.framebuffer);
-                    rlEnableFramebuffer(0); //glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+                    rlBindFramebuffer(RL_READ_FRAMEBUFFER, gBuffer.framebuffer);
+                    rlBindFramebuffer(RL_DRAW_FRAMEBUFFER, 0);
                     rlBlitFramebuffer(0, 0, screenWidth, screenHeight, 0, 0, screenWidth, screenHeight, 0x00000100);    // GL_DEPTH_BUFFER_BIT
                     rlDisableFramebuffer();
 
@@ -270,42 +272,44 @@ int main(void)
                             }
                         rlDisableShader();
                     EndMode3D();
-                    DrawText("FINAL RESULT", 10, screenHeight - 30, 20, rl_DARKGREEN);
+                    
+                    DrawText("FINAL RESULT", 10, screenHeight - 30, 20, DARKGREEN);
                 } break;
-                
                 case DEFERRED_POSITION:
                 {
                     DrawTextureRec((Texture2D){
                         .id = gBuffer.positionTexture,
                         .width = screenWidth,
                         .height = screenHeight,
-                    }, (Rectangle) { 0, 0, screenWidth, -screenHeight }, Vector2Zero(), rl_RAYWHITE);
-                    DrawText("POSITION TEXTURE", 10, screenHeight - 30, 20, rl_DARKGREEN);
+                    }, (Rectangle) { 0, 0, (float)screenWidth, (float)-screenHeight }, Vector2Zero(), RAYWHITE);
+                    
+                    DrawText("POSITION TEXTURE", 10, screenHeight - 30, 20, DARKGREEN);
                 } break;
-                
                 case DEFERRED_NORMAL:
                 {
                     DrawTextureRec((Texture2D){
                         .id = gBuffer.normalTexture,
                         .width = screenWidth,
                         .height = screenHeight,
-                    }, (Rectangle) { 0, 0, screenWidth, -screenHeight }, Vector2Zero(), rl_RAYWHITE);
-                    DrawText("NORMAL TEXTURE", 10, screenHeight - 30, 20, rl_DARKGREEN);
+                    }, (Rectangle) { 0, 0, (float)screenWidth, (float)-screenHeight }, Vector2Zero(), RAYWHITE);
+                    
+                    DrawText("NORMAL TEXTURE", 10, screenHeight - 30, 20, DARKGREEN);
                 } break;
-
                 case DEFERRED_ALBEDO:
                 {
                     DrawTextureRec((Texture2D){
                         .id = gBuffer.albedoSpecTexture,
                         .width = screenWidth,
                         .height = screenHeight,
-                    }, (Rectangle) { 0, 0, screenWidth, -screenHeight }, Vector2Zero(), rl_RAYWHITE);
-                    DrawText("ALBEDO TEXTURE", 10, screenHeight - 30, 20, rl_DARKGREEN);
+                    }, (Rectangle) { 0, 0, (float)screenWidth, (float)-screenHeight }, Vector2Zero(), RAYWHITE);
+                    
+                    DrawText("ALBEDO TEXTURE", 10, screenHeight - 30, 20, DARKGREEN);
                 } break;
+                default: break;
             }
 
-            DrawText("Toggle lights keys: [Y][R][G][B]", 10, 40, 20, rl_DARKGRAY);
-            DrawText("Switch G-buffer textures: [1][2][3][4]", 10, 70, 20, rl_DARKGRAY);
+            DrawText("Toggle lights keys: [Y][R][G][B]", 10, 40, 20, DARKGRAY);
+            DrawText("Switch G-buffer textures: [1][2][3][4]", 10, 70, 20, DARKGRAY);
 
             DrawFPS(10, 10);
             
@@ -318,7 +322,7 @@ int main(void)
     UnloadModel(model);     // Unload the models
     UnloadModel(cube);
 
-    UnloadShader(deferredShader);   // Unload shaders
+    UnloadShader(deferredShader); // Unload shaders
     UnloadShader(gbufferShader);
 
     // Unload geometry buffer and all attached textures
@@ -333,4 +337,3 @@ int main(void)
 
     return 0;
 }
-

@@ -7,7 +7,7 @@
 *   Example licensed under an unmodified zlib/libpng license, which is an OSI-certified,
 *   BSD-like license that allows static linking with closed source software
 *
-*   Copyright (c) 2015-2023 Ramon Santamaria (@raysan5)
+*   Copyright (c) 2015-2024 Ramon Santamaria (@raysan5)
 *
 ********************************************************************************************/
 
@@ -30,7 +30,7 @@ int main(void)
 
     Vector3 playerPosition = { 0.0f, 1.0f, 2.0f };
     Vector3 playerSize = { 1.0f, 2.0f, 1.0f };
-    Color playerColor = rl_GREEN;
+    Color playerColor = GREEN;
 
     Vector3 enemyBoxPos = { -4.0f, 1.0f, 0.0f };
     Vector3 enemyBoxSize = { 2.0f, 2.0f, 2.0f };
@@ -82,25 +82,25 @@ int main(void)
                                      playerPosition.z + playerSize.z/2 }},
             enemySpherePos, enemySphereSize)) collision = true;
 
-        if (collision) playerColor = rl_RED;
-        else playerColor = rl_GREEN;
+        if (collision) playerColor = RED;
+        else playerColor = GREEN;
         //----------------------------------------------------------------------------------
 
         // Draw
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
-            ClearBackground(rl_RAYWHITE);
+            ClearBackground(RAYWHITE);
 
             BeginMode3D(camera);
 
                 // Draw enemy-box
-                DrawCube(enemyBoxPos, enemyBoxSize.x, enemyBoxSize.y, enemyBoxSize.z, rl_GRAY);
-                DrawCubeWires(enemyBoxPos, enemyBoxSize.x, enemyBoxSize.y, enemyBoxSize.z, rl_DARKGRAY);
+                DrawCube(enemyBoxPos, enemyBoxSize.x, enemyBoxSize.y, enemyBoxSize.z, GRAY);
+                DrawCubeWires(enemyBoxPos, enemyBoxSize.x, enemyBoxSize.y, enemyBoxSize.z, DARKGRAY);
 
                 // Draw enemy-sphere
-                DrawSphere(enemySpherePos, enemySphereSize, rl_GRAY);
-                DrawSphereWires(enemySpherePos, enemySphereSize, 16, 16, rl_DARKGRAY);
+                DrawSphere(enemySpherePos, enemySphereSize, GRAY);
+                DrawSphereWires(enemySpherePos, enemySphereSize, 16, 16, DARKGRAY);
 
                 // Draw player
                 DrawCubeV(playerPosition, playerSize, playerColor);
@@ -109,7 +109,7 @@ int main(void)
 
             EndMode3D();
 
-            DrawText("Move player with cursors to collide", 220, 40, 20, rl_GRAY);
+            DrawText("Move player with arrow keys to collide", 220, 40, 20, GRAY);
 
             DrawFPS(10, 10);
 
