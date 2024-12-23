@@ -133,157 +133,157 @@
       "description": ""
     },
     {
-      "name": "LIGHTGRAY",
+      "name": "rl_LIGHTGRAY",
       "type": "COLOR",
       "value": "CLITERAL(Color){ 200, 200, 200, 255 }",
       "description": "Light Gray"
     },
     {
-      "name": "GRAY",
+      "name": "rl_GRAY",
       "type": "COLOR",
       "value": "CLITERAL(Color){ 130, 130, 130, 255 }",
       "description": "Gray"
     },
     {
-      "name": "DARKGRAY",
+      "name": "rl_DARKGRAY",
       "type": "COLOR",
       "value": "CLITERAL(Color){ 80, 80, 80, 255 }",
       "description": "Dark Gray"
     },
     {
-      "name": "YELLOW",
+      "name": "rl_YELLOW",
       "type": "COLOR",
       "value": "CLITERAL(Color){ 253, 249, 0, 255 }",
       "description": "Yellow"
     },
     {
-      "name": "GOLD",
+      "name": "RL_GOLD",
       "type": "COLOR",
       "value": "CLITERAL(Color){ 255, 203, 0, 255 }",
       "description": "Gold"
     },
     {
-      "name": "ORANGE",
+      "name": "rl_ORANGE",
       "type": "COLOR",
       "value": "CLITERAL(Color){ 255, 161, 0, 255 }",
       "description": "Orange"
     },
     {
-      "name": "PINK",
+      "name": "rl_PINK",
       "type": "COLOR",
       "value": "CLITERAL(Color){ 255, 109, 194, 255 }",
       "description": "Pink"
     },
     {
-      "name": "RED",
+      "name": "rl_RED",
       "type": "COLOR",
       "value": "CLITERAL(Color){ 230, 41, 55, 255 }",
       "description": "Red"
     },
     {
-      "name": "MAROON",
+      "name": "rl_MAROON",
       "type": "COLOR",
       "value": "CLITERAL(Color){ 190, 33, 55, 255 }",
       "description": "Maroon"
     },
     {
-      "name": "GREEN",
+      "name": "rl_GREEN",
       "type": "COLOR",
       "value": "CLITERAL(Color){ 0, 228, 48, 255 }",
       "description": "Green"
     },
     {
-      "name": "LIME",
+      "name": "rl_LIME",
       "type": "COLOR",
       "value": "CLITERAL(Color){ 0, 158, 47, 255 }",
       "description": "Lime"
     },
     {
-      "name": "DARKGREEN",
+      "name": "rl_DARKGREEN",
       "type": "COLOR",
       "value": "CLITERAL(Color){ 0, 117, 44, 255 }",
       "description": "Dark Green"
     },
     {
-      "name": "SKYBLUE",
+      "name": "rl_SKYBLUE",
       "type": "COLOR",
       "value": "CLITERAL(Color){ 102, 191, 255, 255 }",
       "description": "Sky Blue"
     },
     {
-      "name": "BLUE",
+      "name": "rl_BLUE",
       "type": "COLOR",
       "value": "CLITERAL(Color){ 0, 121, 241, 255 }",
       "description": "Blue"
     },
     {
-      "name": "DARKBLUE",
+      "name": "rl_DARKBLUE",
       "type": "COLOR",
       "value": "CLITERAL(Color){ 0, 82, 172, 255 }",
       "description": "Dark Blue"
     },
     {
-      "name": "PURPLE",
+      "name": "rl_PURPLE",
       "type": "COLOR",
       "value": "CLITERAL(Color){ 200, 122, 255, 255 }",
       "description": "Purple"
     },
     {
-      "name": "VIOLET",
+      "name": "rl_VIOLET",
       "type": "COLOR",
       "value": "CLITERAL(Color){ 135, 60, 190, 255 }",
       "description": "Violet"
     },
     {
-      "name": "DARKPURPLE",
+      "name": "rl_DARKPURPLE",
       "type": "COLOR",
       "value": "CLITERAL(Color){ 112, 31, 126, 255 }",
       "description": "Dark Purple"
     },
     {
-      "name": "BEIGE",
+      "name": "rl_BEIGE",
       "type": "COLOR",
       "value": "CLITERAL(Color){ 211, 176, 131, 255 }",
       "description": "Beige"
     },
     {
-      "name": "BROWN",
+      "name": "rl_BROWN",
       "type": "COLOR",
       "value": "CLITERAL(Color){ 127, 106, 79, 255 }",
       "description": "Brown"
     },
     {
-      "name": "DARKBROWN",
+      "name": "rl_DARKBROWN",
       "type": "COLOR",
       "value": "CLITERAL(Color){ 76, 63, 47, 255 }",
       "description": "Dark Brown"
     },
     {
-      "name": "WHITE",
+      "name": "rl_WHITE",
       "type": "COLOR",
       "value": "CLITERAL(Color){ 255, 255, 255, 255 }",
       "description": "White"
     },
     {
-      "name": "BLACK",
+      "name": "rl_BLACK",
       "type": "COLOR",
       "value": "CLITERAL(Color){ 0, 0, 0, 255 }",
       "description": "Black"
     },
     {
-      "name": "BLANK",
+      "name": "rl_BLANK",
       "type": "COLOR",
       "value": "CLITERAL(Color){ 0, 0, 0, 0 }",
       "description": "Blank (Transparent)"
     },
     {
-      "name": "MAGENTA",
+      "name": "rl_MAGENTA",
       "type": "COLOR",
       "value": "CLITERAL(Color){ 255, 0, 255, 255 }",
       "description": "Magenta"
     },
     {
-      "name": "RAYWHITE",
+      "name": "rl_RAYWHITE",
       "type": "COLOR",
       "value": "CLITERAL(Color){ 245, 245, 245, 255 }",
       "description": "My own White (raylib logo)"
@@ -10618,6 +10618,37 @@
         {
           "type": "Color",
           "name": "tint"
+        }
+      ]
+    },
+    {
+      "name": "DrawTextureOnPlane",
+      "description": "",
+      "returnType": "void",
+      "params": [
+        {
+          "type": "Camera",
+          "name": "camera"
+        },
+        {
+          "type": "Texture2D",
+          "name": "texture"
+        },
+        {
+          "type": "Rectangle",
+          "name": "source"
+        },
+        {
+          "type": "Vector2",
+          "name": "size"
+        },
+        {
+          "type": "Color",
+          "name": "tint"
+        },
+        {
+          "type": "Vector3",
+          "name": "faceDirection"
         }
       ]
     },
