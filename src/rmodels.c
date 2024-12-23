@@ -514,42 +514,44 @@ void DrawSphereEx(Vector3 centerPos, float radius, int rings, int slices, Color 
 // Draw sphere wires
 void DrawSphereWires(Vector3 centerPos, float radius, int rings, int slices, Color color)
 {
+    int totalVertices = (rings + 2) * slices * 6;
+    Vector3 *vertices = malloc(totalVertices * sizeof(Vector3));
+
+    int index = 0;
+
+    for (int i = 0; i < (rings + 2); i++)
+    {
+        float theta1 = DEG2RAD * (270 + (180.0f / (rings + 1)) * i);
+        float theta2 = DEG2RAD * (270 + (180.0f / (rings + 1)) * (i + 1));
+
+        for (int j = 0; j < slices; j++)
+        {
+            float phi1 = DEG2RAD * (360.0f * j / slices);
+            float phi2 = DEG2RAD * (360.0f * (j + 1) / slices);
+
+            vertices[index++] = (Vector3){ cosf(theta1) * sinf(phi1), sinf(theta1), cosf(theta1) * cosf(phi1) };
+            vertices[index++] = (Vector3){ cosf(theta2) * sinf(phi2), sinf(theta2), cosf(theta2) * cosf(phi2) };
+            vertices[index++] = (Vector3){ cosf(theta2) * sinf(phi2), sinf(theta2), cosf(theta2) * cosf(phi2) };
+            vertices[index++] = (Vector3){ cosf(theta2) * sinf(phi1), sinf(theta2), cosf(theta2) * cosf(phi1) };
+            vertices[index++] = (Vector3){ cosf(theta2) * sinf(phi1), sinf(theta2), cosf(theta2) * cosf(phi1) };
+            vertices[index++] = (Vector3){ cosf(theta1) * sinf(phi1), sinf(theta1), cosf(theta1) * cosf(phi1) };
+        }
+    }
+
     rlPushMatrix();
-        // NOTE: Transformation is applied in inverse order (scale -> translate)
-        rlTranslatef(centerPos.x, centerPos.y, centerPos.z);
-        rlScalef(radius, radius, radius);
+    rlTranslatef(centerPos.x, centerPos.y, centerPos.z);
+    rlScalef(radius, radius, radius);
 
-        rlBegin(RL_LINES);
-            rlColor4ub(color.r, color.g, color.b, color.a);
-
-            for (int i = 0; i < (rings + 2); i++)
-            {
-                for (int j = 0; j < slices; j++)
-                {
-                    rlVertex3f(cosf(DEG2RAD*(270 + (180.0f/(rings + 1))*i))*sinf(DEG2RAD*(360.0f*j/slices)),
-                               sinf(DEG2RAD*(270 + (180.0f/(rings + 1))*i)),
-                               cosf(DEG2RAD*(270 + (180.0f/(rings + 1))*i))*cosf(DEG2RAD*(360.0f*j/slices)));
-                    rlVertex3f(cosf(DEG2RAD*(270 + (180.0f/(rings + 1))*(i + 1)))*sinf(DEG2RAD*(360.0f*(j + 1)/slices)),
-                               sinf(DEG2RAD*(270 + (180.0f/(rings + 1))*(i + 1))),
-                               cosf(DEG2RAD*(270 + (180.0f/(rings + 1))*(i + 1)))*cosf(DEG2RAD*(360.0f*(j + 1)/slices)));
-
-                    rlVertex3f(cosf(DEG2RAD*(270 + (180.0f/(rings + 1))*(i + 1)))*sinf(DEG2RAD*(360.0f*(j + 1)/slices)),
-                               sinf(DEG2RAD*(270 + (180.0f/(rings + 1))*(i + 1))),
-                               cosf(DEG2RAD*(270 + (180.0f/(rings + 1))*(i + 1)))*cosf(DEG2RAD*(360.0f*(j + 1)/slices)));
-                    rlVertex3f(cosf(DEG2RAD*(270 + (180.0f/(rings + 1))*(i + 1)))*sinf(DEG2RAD*(360.0f*j/slices)),
-                               sinf(DEG2RAD*(270 + (180.0f/(rings + 1))*(i + 1))),
-                               cosf(DEG2RAD*(270 + (180.0f/(rings + 1))*(i + 1)))*cosf(DEG2RAD*(360.0f*j/slices)));
-
-                    rlVertex3f(cosf(DEG2RAD*(270 + (180.0f/(rings + 1))*(i + 1)))*sinf(DEG2RAD*(360.0f*j/slices)),
-                               sinf(DEG2RAD*(270 + (180.0f/(rings + 1))*(i + 1))),
-                               cosf(DEG2RAD*(270 + (180.0f/(rings + 1))*(i + 1)))*cosf(DEG2RAD*(360.0f*j/slices)));
-                    rlVertex3f(cosf(DEG2RAD*(270 + (180.0f/(rings + 1))*i))*sinf(DEG2RAD*(360.0f*j/slices)),
-                               sinf(DEG2RAD*(270 + (180.0f/(rings + 1))*i)),
-                               cosf(DEG2RAD*(270 + (180.0f/(rings + 1))*i))*cosf(DEG2RAD*(360.0f*j/slices)));
-                }
-            }
-        rlEnd();
+    rlBegin(RL_LINES);
+    rlColor4ub(color.r, color.g, color.b, color.a);
+    for (int i = 0; i < totalVertices; i++)
+    {
+        rlVertex3f(vertices[i].x, vertices[i].y, vertices[i].z);
+    }
+    rlEnd();
     rlPopMatrix();
+
+    free(vertices);
 }
 
 // Draw a cylinder
