@@ -2252,13 +2252,13 @@ static Font LoadBMFont(const char *fileName)
     if (pageCount > 1)
     {
         // Resize font atlas to draw additional images
-        ImageResizeCanvas(&fullFont, imWidth, imHeight*pageCount, 0, 0, BLACK);
+        ImageResizeCanvas(&fullFont, imWidth, imHeight*pageCount, 0, 0, rl_BLACK);
 
         for (int i = 1; i < pageCount; i++)
         {
             Rectangle srcRec = { 0.0f, 0.0f, (float)imWidth, (float)imHeight };
             Rectangle destRec = { 0.0f, (float)imHeight*(float)i, (float)imWidth, (float)imHeight };
-            ImageDraw(&fullFont, imFonts[i], srcRec, destRec, WHITE);
+            ImageDraw(&fullFont, imFonts[i], srcRec, destRec, rl_WHITE);
         }
     }
 
@@ -2298,7 +2298,7 @@ static Font LoadBMFont(const char *fileName)
         }
         else
         {
-            font.glyphs[i].image = GenImageColor((int)font.recs[i].width, (int)font.recs[i].height, BLACK);
+            font.glyphs[i].image = GenImageColor((int)font.recs[i].width, (int)font.recs[i].height, rl_BLACK);
             TRACELOG(LOG_WARNING, "FONT: [%s] Some characters data not correctly provided", fileName);
         }
     }
