@@ -63,13 +63,16 @@ void CloseWindow(void);
 
 #define RGFW_IMPLEMENTATION
 
-#if defined(__WIN32) || defined(__WIN64)
+#if defined(_WIN32) || defined(_WIN64)
     #define WIN32_LEAN_AND_MEAN
-    #define Rectangle rectangle_win32
+	#define Rectangle rectangle_win32
     #define CloseWindow CloseWindow_win32
     #define ShowCursor __imp_ShowCursor
-    #define _APISETSTRING_
-    __declspec(dllimport) int __stdcall MultiByteToWideChar(unsigned int CodePage, unsigned long dwFlags, const char *lpMultiByteStr, int cbMultiByte, wchar_t *lpWideCharStr, int cchWideChar);
+	#define _APISETSTRING_
+	
+	#undef MAX_PATH
+
+	__declspec(dllimport) int __stdcall MultiByteToWideChar(unsigned int CodePage, unsigned long dwFlags, const char *lpMultiByteStr, int cbMultiByte, wchar_t *lpWideCharStr, int cchWideChar);
 #endif
 
 #if defined(__APPLE__)
@@ -79,11 +82,14 @@ void CloseWindow(void);
 
 #include "../external/RGFW.h"
 
-#if defined(__WIN32) || defined(__WIN64)
+#if defined(_WIN32) || defined(_WIN64)
     #undef DrawText
     #undef ShowCursor
     #undef CloseWindow
     #undef Rectangle
+
+	#undef MAX_PATH
+	#define MAX_PATH 1025
 #endif
 
 #if defined(__APPLE__)
@@ -514,6 +520,9 @@ void SetWindowMaxSize(int width, int height)
 // Set window dimensions
 void SetWindowSize(int width, int height)
 {
+    CORE.Window.screen.width = width;
+    CORE.Window.screen.height = height;
+
     RGFW_window_resize(platform.window, RGFW_AREA(width, height));
 }
 
@@ -654,6 +663,43 @@ const char *GetClipboardText(void)
 {
     return RGFW_readClipboard(NULL);
 }
+
+
+#if defined(SUPPORT_CLIPBOARD_IMAGE)
+
+#ifdef _WIN32
+#   define WIN32_CLIPBOARD_IMPLEMENTATION
+#   define WINUSER_ALREADY_INCLUDED
+#   define WINBASE_ALREADY_INCLUDED
+#   define WINGDI_ALREADY_INCLUDED
+#   include "../external/win32_clipboard.h"
+#endif
+
+// Get clipboard image
+Image GetClipboardImage(void)
+{
+    Image image = {0};
+    unsigned long long int dataSize = 0;
+    void* fileData = NULL;
+
+#ifdef _WIN32
+    int width, height;
+    fileData  = (void*)Win32GetClipboardImageData(&width, &height, &dataSize);
+#else
+    TRACELOG(LOG_WARNING, "Clipboard image: PLATFORM_DESKTOP_RGFW doesn't implement `GetClipboardImage` for this OS");
+#endif
+
+    if (fileData == NULL)
+    {
+        TRACELOG(LOG_WARNING, "Clipboard image: Couldn't get clipboard data.");
+    }
+    else
+    {
+        image = LoadImageFromMemory(".bmp", fileData, dataSize);
+    }
+    return image;
+}
+#endif // SUPPORT_CLIPBOARD_IMAGE
 
 // Show mouse cursor
 void ShowCursor(void)

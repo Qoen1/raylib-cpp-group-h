@@ -603,7 +603,7 @@ void DrawCylinder(Vector3 position, float radiusTop, float radiusBottom, float h
             for (int i = 0; i < sides; i++)
             {
                 rlVertex3f(0, 0, 0);
-                rlVertex3f(sinf(DEG2RAD*i*angleStep)*radiusBottom, 0, cosf(DEG2RAD*(i+1)*angleStep)*radiusBottom);
+                rlVertex3f(sinf(DEG2RAD*(i+1)*angleStep)*radiusBottom, 0, cosf(DEG2RAD*(i+1)*angleStep)*radiusBottom);
                 rlVertex3f(sinf(DEG2RAD*i*angleStep)*radiusBottom, 0, cosf(DEG2RAD*i*angleStep)*radiusBottom);
             }
 
@@ -1508,7 +1508,7 @@ void DrawMesh(Mesh mesh, Material material, Matrix transform)
 
 #ifdef RL_SUPPORT_MESH_GPU_SKINNING
     // Upload Bone Transforms
-    if (material.shader.locs[SHADER_LOC_BONE_MATRICES] != -1 && mesh.boneMatrices)
+    if ((material.shader.locs[SHADER_LOC_BONE_MATRICES] != -1) && mesh.boneMatrices)
     {
         rlSetUniformMatrices(material.shader.locs[SHADER_LOC_BONE_MATRICES], mesh.boneMatrices, mesh.boneCount);
     }
@@ -1754,7 +1754,7 @@ void DrawMeshInstanced(Mesh mesh, Material material, const Matrix *transforms, i
 
 #ifdef RL_SUPPORT_MESH_GPU_SKINNING
     // Upload Bone Transforms
-    if (material.shader.locs[SHADER_LOC_BONE_MATRICES] != -1 && mesh.boneMatrices)
+    if ((material.shader.locs[SHADER_LOC_BONE_MATRICES] != -1) && mesh.boneMatrices)
     {
         rlSetUniformMatrices(material.shader.locs[SHADER_LOC_BONE_MATRICES], mesh.boneMatrices, mesh.boneCount);
     }
@@ -2262,109 +2262,10 @@ ModelAnimation *LoadModelAnimations(const char *fileName, int *animCount)
     return animations;
 }
 
-// Update model animated vertex data (positions and normals) for a given frame
-// NOTE: Updated data is uploaded to GPU
-void UpdateModelAnimation(Model model, ModelAnimation anim, int frame)
-{
-    if ((anim.frameCount > 0) && (anim.bones != NULL) && (anim.framePoses != NULL))
-    {
-        if (frame >= anim.frameCount) frame = frame%anim.frameCount;
-
-        for (int m = 0; m < model.meshCount; m++)
-        {
-            Mesh mesh = model.meshes[m];
-
-            if (mesh.boneIds == NULL || mesh.boneWeights == NULL)
-            {
-                TRACELOG(LOG_WARNING, "MODEL: UpdateModelAnimation(): Mesh %i has no connection to bones", m);
-                continue;
-            }
-
-            bool updated = false;           // Flag to check when anim vertex information is updated
-            Vector3 animVertex = { 0 };
-            Vector3 animNormal = { 0 };
-
-            Vector3 inTranslation = { 0 };
-            Quaternion inRotation = { 0 };
-            // Vector3 inScale = { 0 };
-
-            Vector3 outTranslation = { 0 };
-            Quaternion outRotation = { 0 };
-            Vector3 outScale = { 0 };
-
-            int boneId = 0;
-            int boneCounter = 0;
-            float boneWeight = 0.0;
-
-            const int vValues = mesh.vertexCount*3;
-            for (int vCounter = 0; vCounter < vValues; vCounter += 3)
-            {
-                mesh.animVertices[vCounter] = 0;
-                mesh.animVertices[vCounter + 1] = 0;
-                mesh.animVertices[vCounter + 2] = 0;
-
-                if (mesh.animNormals != NULL)
-                {
-                    mesh.animNormals[vCounter] = 0;
-                    mesh.animNormals[vCounter + 1] = 0;
-                    mesh.animNormals[vCounter + 2] = 0;
-                }
-
-                // Iterates over 4 bones per vertex
-                for (int j = 0; j < 4; j++, boneCounter++)
-                {
-                    boneWeight = mesh.boneWeights[boneCounter];
-
-                    // Early stop when no transformation will be applied
-                    if (boneWeight == 0.0f) continue;
-
-                    boneId = mesh.boneIds[boneCounter];
-                    //int boneIdParent = model.bones[boneId].parent;
-                    inTranslation = model.bindPose[boneId].translation;
-                    inRotation = model.bindPose[boneId].rotation;
-                    //inScale = model.bindPose[boneId].scale;
-                    outTranslation = anim.framePoses[frame][boneId].translation;
-                    outRotation = anim.framePoses[frame][boneId].rotation;
-                    outScale = anim.framePoses[frame][boneId].scale;
-
-                    // Vertices processing
-                    // NOTE: We use meshes.vertices (default vertex position) to calculate meshes.animVertices (animated vertex position)
-                    animVertex = (Vector3){ mesh.vertices[vCounter], mesh.vertices[vCounter + 1], mesh.vertices[vCounter + 2] };
-                    animVertex = Vector3Subtract(animVertex, inTranslation);
-                    animVertex = Vector3Multiply(animVertex, outScale);
-                    animVertex = Vector3RotateByQuaternion(animVertex, QuaternionMultiply(outRotation, QuaternionInvert(inRotation)));
-                    animVertex = Vector3Add(animVertex, outTranslation);
-                    //animVertex = Vector3Transform(animVertex, model.transform);
-                    mesh.animVertices[vCounter] += animVertex.x*boneWeight;
-                    mesh.animVertices[vCounter + 1] += animVertex.y*boneWeight;
-                    mesh.animVertices[vCounter + 2] += animVertex.z*boneWeight;
-                    updated = true;
-
-                    // Normals processing
-                    // NOTE: We use meshes.baseNormals (default normal) to calculate meshes.normals (animated normals)
-                    if (mesh.normals != NULL)
-                    {
-                        animNormal = (Vector3){ mesh.normals[vCounter], mesh.normals[vCounter + 1], mesh.normals[vCounter + 2] };
-                        animNormal = Vector3RotateByQuaternion(animNormal, QuaternionMultiply(outRotation, QuaternionInvert(inRotation)));
-                        mesh.animNormals[vCounter] += animNormal.x*boneWeight;
-                        mesh.animNormals[vCounter + 1] += animNormal.y*boneWeight;
-                        mesh.animNormals[vCounter + 2] += animNormal.z*boneWeight;
-                    }
-                }
-            }
-
-            // Upload new vertex data to GPU for model drawing
-            // NOTE: Only update data when values changed
-            if (updated)
-            {
-                rlUpdateVertexBuffer(mesh.vboId[0], mesh.animVertices, mesh.vertexCount*3*sizeof(float), 0); // Update vertex position
-                rlUpdateVertexBuffer(mesh.vboId[2], mesh.animNormals, mesh.vertexCount*3*sizeof(float), 0);  // Update vertex normals
-            }
-        }
-    }
-}
-
-void UpdateModelAnimationBoneMatrices(Model model, ModelAnimation anim, int frame)
+// Update model animated bones transform matrices for a given frame
+// NOTE: Updated data is not uploaded to GPU but kept at model.meshes[i].boneMatrices[boneId],
+// to be uploaded to shader at drawing, in case GPU skinning is enabled
+void UpdateModelAnimationBones(Model model, ModelAnimation anim, int frame)
 {
     if ((anim.frameCount > 0) && (anim.bones != NULL) && (anim.framePoses != NULL))
     {
@@ -2404,6 +2305,66 @@ void UpdateModelAnimationBoneMatrices(Model model, ModelAnimation anim, int fram
                     model.meshes[i].boneMatrices[boneId] = boneMatrix;
                 }
             }
+        }
+    }
+}
+
+// at least 2x speed up vs the old method 
+// Update model animated vertex data (positions and normals) for a given frame
+// NOTE: Updated data is uploaded to GPU
+void UpdateModelAnimation(Model model, ModelAnimation anim, int frame)
+{
+    UpdateModelAnimationBones(model,anim,frame);
+    for (int m = 0; m < model.meshCount; m++)
+    {
+        Mesh mesh = model.meshes[m];
+        Vector3 animVertex = { 0 };
+        Vector3 animNormal = { 0 };
+        int boneId = 0;
+        int boneCounter = 0;
+        float boneWeight = 0.0;
+        bool updated = false;           // Flag to check when anim vertex information is updated
+        const int vValues = mesh.vertexCount*3;
+        for (int vCounter = 0; vCounter < vValues; vCounter += 3)
+        {
+            mesh.animVertices[vCounter] = 0;
+            mesh.animVertices[vCounter + 1] = 0;
+            mesh.animVertices[vCounter + 2] = 0;
+            if (mesh.animNormals != NULL)
+            {
+                mesh.animNormals[vCounter] = 0;
+                mesh.animNormals[vCounter + 1] = 0;
+                mesh.animNormals[vCounter + 2] = 0;
+            }
+                // Iterates over 4 bones per vertex
+            for (int j = 0; j < 4; j++, boneCounter++)
+            {
+                boneWeight = mesh.boneWeights[boneCounter];
+                boneId = mesh.boneIds[boneCounter];
+                // Early stop when no transformation will be applied
+                if (boneWeight == 0.0f) continue;
+                animVertex = (Vector3){ mesh.vertices[vCounter], mesh.vertices[vCounter + 1], mesh.vertices[vCounter + 2] };
+                animVertex = Vector3Transform(animVertex,model.meshes[m].boneMatrices[boneId]);
+                mesh.animVertices[vCounter] += animVertex.x * boneWeight;
+                mesh.animVertices[vCounter+1] += animVertex.y * boneWeight;
+                mesh.animVertices[vCounter+2] += animVertex.z * boneWeight;
+                updated = true;
+                // Normals processing
+                // NOTE: We use meshes.baseNormals (default normal) to calculate meshes.normals (animated normals)
+                if (mesh.normals != NULL)
+                {
+                    animNormal = (Vector3){ mesh.normals[vCounter], mesh.normals[vCounter + 1], mesh.normals[vCounter + 2] };
+                    animNormal = Vector3Transform(animNormal,model.meshes[m].boneMatrices[boneId]);
+                    mesh.animNormals[vCounter] += animNormal.x*boneWeight;
+                    mesh.animNormals[vCounter + 1] += animNormal.y*boneWeight;
+                    mesh.animNormals[vCounter + 2] += animNormal.z*boneWeight;
+                }
+            }
+        }
+        if (updated)
+        {
+            rlUpdateVertexBuffer(mesh.vboId[0], mesh.animVertices, mesh.vertexCount*3*sizeof(float), 0); // Update vertex position
+            rlUpdateVertexBuffer(mesh.vboId[2], mesh.animNormals, mesh.vertexCount*3*sizeof(float), 0);  // Update vertex normals
         }
     }
 }
@@ -2817,6 +2778,7 @@ Mesh GenMeshSphere(float radius, int rings, int slices)
 
     if ((rings >= 3) && (slices >= 3))
     {
+        par_shapes_set_epsilon_degenerate_sphere(0.0);
         par_shapes_mesh *sphere = par_shapes_create_parametric_sphere(slices, rings);
         par_shapes_scale(sphere, radius, radius, radius);
         // NOTE: Soft normals are computed internally
@@ -4282,7 +4244,7 @@ static Model LoadOBJ(const char *fileName)
     // walk all the faces
     for (unsigned int faceId = 0; faceId < objAttributes.num_faces; faceId++)
     {
-        if (faceVertIndex >= nextShapeEnd)
+        if (faceId >= nextShapeEnd)
         {
             // try to find the last vert in the next shape
             nextShape++;
@@ -4333,7 +4295,7 @@ static Model LoadOBJ(const char *fileName)
     for (unsigned int faceId = 0; faceId < objAttributes.num_faces; faceId++)
     {
         bool newMesh = false; // do we need a new mesh?
-        if (faceVertIndex >= nextShapeEnd)
+        if (faceId >= nextShapeEnd)
         {
             // try to find the last vert in the next shape
             nextShape++;
@@ -4395,7 +4357,7 @@ static Model LoadOBJ(const char *fileName)
     for (unsigned int faceId = 0; faceId < objAttributes.num_faces; faceId++)
     {
         bool newMesh = false; // do we need a new mesh?
-        if (faceVertIndex >= nextShapeEnd)
+        if (faceId >= nextShapeEnd)
         {
             // try to find the last vert in the next shape
             nextShape++;
