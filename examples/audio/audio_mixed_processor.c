@@ -97,7 +97,7 @@ int main(void)
             DrawRectangle(199, 199, 402, 34, rl_LIGHTGRAY);
             for (int i = 0; i < 400; i++)
             {
-                DrawLine(201 + i, 232 - averageVolume[i] * 32, 201 + i, 232, rl_MAROON);
+                DrawLine(201 + i, 232 - (int)(averageVolume[i] * 32), 201 + i, 232, rl_MAROON);
             }
             DrawRectangleLines(199, 199, 402, 34, rl_GRAY);
 

@@ -7,7 +7,7 @@
 *   Example licensed under an unmodified zlib/libpng license, which is an OSI-certified,
 *   BSD-like license that allows static linking with closed source software
 *
-*   Copyright (c) 2017-2023 Ramon Santamaria (@raysan5)
+*   Copyright (c) 2017-2024 Ramon Santamaria (@raysan5)
 *
 ********************************************************************************************/
 
@@ -61,16 +61,16 @@ int main(void)
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
-            ClearBackground(rl_RAYWHITE);
+            ClearBackground(RAYWHITE);
 
-            DrawText("MOVE START-END POINTS WITH MOUSE", 15, 20, 20, rl_GRAY);
+            DrawText("MOVE START-END POINTS WITH MOUSE", 15, 20, 20, GRAY);
 
             // Draw line Cubic Bezier, in-out interpolation (easing), no control points
-            DrawLineBezier(startPoint, endPoint, 4.0f, rl_BLUE);
+            DrawLineBezier(startPoint, endPoint, 4.0f, BLUE);
             
             // Draw start-end spline circles with some details
-            DrawCircleV(startPoint, CheckCollisionPointCircle(mouse, startPoint, 10.0f)? 14 : 8, moveStartPoint? rl_RED : rl_BLUE);
-            DrawCircleV(endPoint, CheckCollisionPointCircle(mouse, endPoint, 10.0f)? 14 : 8, moveEndPoint? rl_RED : rl_BLUE);
+            DrawCircleV(startPoint, CheckCollisionPointCircle(mouse, startPoint, 10.0f)? 14.0f : 8.0f, moveStartPoint? RED : BLUE);
+            DrawCircleV(endPoint, CheckCollisionPointCircle(mouse, endPoint, 10.0f)? 14.0f : 8.0f, moveEndPoint? RED : BLUE);
 
         EndDrawing();
         //----------------------------------------------------------------------------------
