@@ -2138,7 +2138,7 @@ static void ProcessMaterialsOBJ(Material *materials, tinyobj_material_t *mats, i
         materials[m].maps[MATERIAL_MAP_SPECULAR].value = 0.0f;
 
         if (mats[m].bump_texname != NULL) materials[m].maps[MATERIAL_MAP_NORMAL].texture = LoadTexture(mats[m].bump_texname);  //char *bump_texname; // map_bump, bump
-        materials[m].maps[MATERIAL_MAP_NORMAL].color = WHITE;
+        materials[m].maps[MATERIAL_MAP_NORMAL].color = rl_WHITE;
         materials[m].maps[MATERIAL_MAP_NORMAL].value = mats[m].shininess;
 
         materials[m].maps[MATERIAL_MAP_EMISSION].color = (Color){ (unsigned char)(mats[m].emission[0]*255.0f), (unsigned char)(mats[m].emission[1]*255.0f), (unsigned char)(mats[m].emission[2]*255.0f), 255 }; //float emission[3];
@@ -2192,8 +2192,8 @@ Material LoadMaterialDefault(void)
     //material.maps[MATERIAL_MAP_NORMAL].texture;         // NOTE: By default, not set
     //material.maps[MATERIAL_MAP_SPECULAR].texture;       // NOTE: By default, not set
 
-    material.maps[MATERIAL_MAP_DIFFUSE].color = WHITE;    // Diffuse color
-    material.maps[MATERIAL_MAP_SPECULAR].color = WHITE;   // Specular color
+    material.maps[MATERIAL_MAP_DIFFUSE].color = rl_WHITE;    // Diffuse color
+    material.maps[MATERIAL_MAP_SPECULAR].color = rl_WHITE;   // Specular color
 
     return material;
 }
@@ -3262,7 +3262,7 @@ Mesh GenMeshCubicmap(Image cubicmap, Vector3 cubeSize)
             Vector3 v8 = { w*(x + 0.5f), 0, h*(z + 0.5f) };
 
             // We check pixel color to be WHITE -> draw full cube
-            if (COLOR_EQUAL(pixels[z*cubicmap.width + x], WHITE))
+            if (COLOR_EQUAL(pixels[z*cubicmap.width + x], rl_WHITE))
             {
                 // Define triangles and checking collateral cubes
                 //------------------------------------------------
@@ -3319,7 +3319,7 @@ Mesh GenMeshCubicmap(Image cubicmap, Vector3 cubeSize)
                 tcCounter += 6;
 
                 // Checking cube on bottom of current cube
-                if (((z < cubicmap.height - 1) && COLOR_EQUAL(pixels[(z + 1)*cubicmap.width + x], BLACK)) || (z == cubicmap.height - 1))
+                if (((z < cubicmap.height - 1) && COLOR_EQUAL(pixels[(z + 1)*cubicmap.width + x], rl_BLACK)) || (z == cubicmap.height - 1))
                 {
                     // Define front triangles (2 tris, 6 vertex) --> v2 v7 v3, v3 v7 v8
                     // NOTE: Collateral occluded faces are not generated
@@ -3349,7 +3349,7 @@ Mesh GenMeshCubicmap(Image cubicmap, Vector3 cubeSize)
                 }
 
                 // Checking cube on top of current cube
-                if (((z > 0) && COLOR_EQUAL(pixels[(z - 1)*cubicmap.width + x], BLACK)) || (z == 0))
+                if (((z > 0) && COLOR_EQUAL(pixels[(z - 1)*cubicmap.width + x], rl_BLACK)) || (z == 0))
                 {
                     // Define back triangles (2 tris, 6 vertex) --> v1 v5 v6, v1 v4 v5
                     // NOTE: Collateral occluded faces are not generated
@@ -3379,7 +3379,7 @@ Mesh GenMeshCubicmap(Image cubicmap, Vector3 cubeSize)
                 }
 
                 // Checking cube on right of current cube
-                if (((x < cubicmap.width - 1) && COLOR_EQUAL(pixels[z*cubicmap.width + (x + 1)], BLACK)) || (x == cubicmap.width - 1))
+                if (((x < cubicmap.width - 1) && COLOR_EQUAL(pixels[z*cubicmap.width + (x + 1)], rl_BLACK)) || (x == cubicmap.width - 1))
                 {
                     // Define right triangles (2 tris, 6 vertex) --> v3 v8 v4, v4 v8 v5
                     // NOTE: Collateral occluded faces are not generated
@@ -3409,7 +3409,7 @@ Mesh GenMeshCubicmap(Image cubicmap, Vector3 cubeSize)
                 }
 
                 // Checking cube on left of current cube
-                if (((x > 0) && COLOR_EQUAL(pixels[z*cubicmap.width + (x - 1)], BLACK)) || (x == 0))
+                if (((x > 0) && COLOR_EQUAL(pixels[z*cubicmap.width + (x - 1)], rl_BLACK)) || (x == 0))
                 {
                     // Define left triangles (2 tris, 6 vertex) --> v1 v7 v2, v1 v6 v7
                     // NOTE: Collateral occluded faces are not generated
@@ -3439,7 +3439,7 @@ Mesh GenMeshCubicmap(Image cubicmap, Vector3 cubeSize)
                 }
             }
             // We check pixel color to be BLACK, we will only draw floor and roof
-            else if (COLOR_EQUAL(pixels[z*cubicmap.width + x], BLACK))
+            else if (COLOR_EQUAL(pixels[z*cubicmap.width + x], rl_BLACK))
             {
                 // Define top triangles (2 tris, 6 vertex --> v1-v2-v3, v1-v3-v4)
                 mapVertices[vCounter] = v1;
@@ -3716,7 +3716,7 @@ void DrawModelEx(Model model, Vector3 position, Vector3 rotationAxis, float rota
     {
         Color color = model.materials[model.meshMaterial[i]].maps[MATERIAL_MAP_DIFFUSE].color;
 
-        Color colorTint = WHITE;
+        Color colorTint = rl_WHITE;
         colorTint.r = (unsigned char)(((int)color.r*(int)tint.r)/255);
         colorTint.g = (unsigned char)(((int)color.g*(int)tint.g)/255);
         colorTint.b = (unsigned char)(((int)color.b*(int)tint.b)/255);
@@ -3862,6 +3862,70 @@ void DrawBillboardPro(Camera camera, Texture2D texture, Rectangle source, Vector
         }
 
     rlEnd();
+    rlSetTexture(0);
+}
+
+void DrawTextureOnPlane(Camera camera, Texture2D texture, Rectangle source, Vector2 size, Color tint, Vector3 faceDirection) {
+    Vector3 up = {0,1,0};
+    Vector2 sizeRatio = { size.x*fabsf((float)source.width/source.height), size.y };
+    Vector3 correctTarget = {0,0,0};
+
+    Matrix matView = MatrixLookAt(faceDirection, correctTarget, camera.up);
+
+    Vector3 right = { matView.m0, matView.m4, matView.m8 };
+
+    Vector3 rightScaled = Vector3Scale(right, sizeRatio.x/2);
+    Vector3 upScaled = Vector3Scale(up, sizeRatio.y/2);
+
+    Vector3 p1 = Vector3Add(rightScaled, upScaled);
+    Vector3 p2 = Vector3Subtract(rightScaled, upScaled);
+
+    Vector3 topLeft = Vector3Scale(p2, -1);
+    Vector3 topRight = p1;
+    Vector3 bottomRight = p2;
+    Vector3 bottomLeft = Vector3Scale(p1, -1);
+
+    rlSetTexture(texture.id);
+
+    rlBegin(RL_QUADS);
+        rlColor4ub(tint.r, tint.g, tint.b, tint.a);
+
+        if (sizeRatio.x * sizeRatio.y >= 0.0f)
+        {
+            // Bottom-left corner for texture and quad
+            rlTexCoord2f((float)source.x/texture.width, (float)source.y/texture.height);
+            rlVertex3f(topLeft.x, topLeft.y, topLeft.z);
+
+            // Top-left corner for texture and quad
+            rlTexCoord2f((float)source.x/texture.width, (float)(source.y + source.height)/texture.height);
+            rlVertex3f(bottomLeft.x, bottomLeft.y, bottomLeft.z);
+
+            // Top-right corner for texture and quad
+            rlTexCoord2f((float)(source.x + source.width)/texture.width, (float)(source.y + source.height)/texture.height);
+            rlVertex3f(bottomRight.x, bottomRight.y, bottomRight.z);
+
+            // Bottom-right corner for texture and quad
+            rlTexCoord2f((float)(source.x + source.width)/texture.width, (float)source.y/texture.height);
+            rlVertex3f(topRight.x, topRight.y, topRight.z);
+        }
+        else
+        {
+            // Reverse vertex order if the size has only one negative dimension
+            rlTexCoord2f((float)(source.x + source.width)/texture.width, (float)source.y/texture.height);
+            rlVertex3f(topRight.x, topRight.y, topRight.z);
+
+            rlTexCoord2f((float)(source.x + source.width)/texture.width, (float)(source.y + source.height)/texture.height);
+            rlVertex3f(bottomRight.x, bottomRight.y, bottomRight.z);
+
+            rlTexCoord2f((float)source.x/texture.width, (float)(source.y + source.height)/texture.height);
+            rlVertex3f(bottomLeft.x, bottomLeft.y, bottomLeft.z);
+
+            rlTexCoord2f((float)source.x/texture.width, (float)source.y/texture.height);
+            rlVertex3f(topLeft.x, topLeft.y, topLeft.z);
+        }
+
+    rlEnd();
+
     rlSetTexture(0);
 }
 
@@ -6577,7 +6641,7 @@ static Model LoadM3D(const char *fileName)
                     } break;
                     case m3dp_Ps:
                     {
-                        model.materials[i + 1].maps[MATERIAL_MAP_NORMAL].color = WHITE;
+                        model.materials[i + 1].maps[MATERIAL_MAP_NORMAL].color = rl_WHITE;
                         model.materials[i + 1].maps[MATERIAL_MAP_NORMAL].value = prop->value.fnum;
                     } break;
                     default:
